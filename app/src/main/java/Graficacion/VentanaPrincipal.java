@@ -14,7 +14,7 @@ import com.formdev.flatlaf.FlatLightLaf;
  * @author libookami
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-
+    
     CanvasPanel canvas1;
     
     /**
@@ -22,7 +22,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-        
+
         System.out.println("Inicializado correctamente");
         
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
