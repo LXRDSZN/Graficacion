@@ -49,7 +49,7 @@ public class CanvasPanel implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        font.draw(batch, "Hola mundo", (Integer)v.jSpinner1.getValue(), (Integer)v.jSpinner2.getValue());
+        font.draw(batch,"hola mundo" , 100, 100);
         batch.end();
         
         render.begin(ShapeRenderer.ShapeType.Filled);
