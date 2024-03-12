@@ -462,7 +462,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // Manejo del error en caso de que la cadena no contenga un entero válido
         System.out.println("El texto ingresado no es un número entero válido.");
         }
-
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
