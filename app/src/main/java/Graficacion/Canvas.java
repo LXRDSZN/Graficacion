@@ -23,8 +23,11 @@ public class Canvas implements ApplicationListener{
     BitmapFont font;
     ShapeRenderer rend;
     
-    
-    
+    // Dentro de la clase Canvas
+public void setEspaciado(int nuevoEspaciado) {
+    this.espaciado = nuevoEspaciado;
+}
+     
     public DefaultListModel<Figura> listaFiguras;
 
     public Canvas() {
@@ -35,7 +38,9 @@ public class Canvas implements ApplicationListener{
         //listaFiguras.addElement(new Figura("Figu3"));
     }
 
+    private int espaciado = 20; // Valor por defecto
 
+  
 
     @Override
     public void create() {
@@ -57,13 +62,14 @@ public class Canvas implements ApplicationListener{
         rend.begin(ShapeRenderer.ShapeType.Line); // Iniciar el ShapeRenderer para dibujar líneas
 
         rend.setColor(Color.WHITE);
+        
         // Dibujar líneas horizontales
-        for (int y = 0; y <= Gdx.graphics.getHeight(); y += 20) {
+        for (int y = 0; y <= Gdx.graphics.getHeight(); y += espaciado) {
             rend.line(0, y, Gdx.graphics.getWidth(), y);
         }
 
         // Dibujar líneas verticales
-        for (int x = 0; x <= Gdx.graphics.getWidth(); x += 20) {
+        for (int x = 0; x <= Gdx.graphics.getWidth(); x += espaciado) {
             rend.line(x, 0, x, Gdx.graphics.getHeight());
         }
         //}
@@ -75,7 +81,7 @@ public class Canvas implements ApplicationListener{
 
         rend.begin(ShapeRenderer.ShapeType.Line); // Iniciar el ShapeRenderer para dibujar las líneas que unen los puntos
 
-        rend.setColor(Color.BLUE); // Color de la línea
+        rend.setColor(Color.GOLD); // Color de la línea
 
         // Dibujar líneas que unen los puntos de cada figura
         for (int i = 0; i < listaFiguras.size(); i++) {
@@ -115,7 +121,6 @@ public class Canvas implements ApplicationListener{
                 rend.circle(punto.Px * Figura.escala, punto.Py * Figura.escala, 10);
             }
         }
-
         rend.end(); // Finalizar el dibujo de los puntos
 
     }

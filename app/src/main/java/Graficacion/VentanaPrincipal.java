@@ -164,6 +164,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         jButton8.setText("Definir");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -429,16 +434,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-       String textoIngresado = jTextField4.getText(); // Obtenemos el texto ingresado por el usuario
-        try {
-            // Convertimos el texto a un número entero
-            int numero = Integer.parseInt(textoIngresado);
-            // Ahora puedes usar 'numero' como un entero
-        } catch (NumberFormatException e) {
-        // Manejo del error en caso de que la cadena no contenga un entero válido
+    String textoIngresado = jTextField4.getText();
+    try {
+        int numero = Integer.parseInt(textoIngresado);
+    } catch (NumberFormatException e) {
         System.out.println("El texto ingresado no es un número entero válido.");
-        }
+    }
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+         String textoIngresado = jTextField4.getText();
+    try {
+        int nuevoEspaciado = Integer.parseInt(textoIngresado);
+        
+        // Asumiendo que 'c' es tu instancia de Canvas
+        c.setEspaciado(nuevoEspaciado);
+
+        // Aquí, actualizarías la vista de tu canvas si es necesario.
+        // Esto podría implicar llamar a un método de redibujado específico,
+        // como c.redraw() o algo similar, dependiendo de cómo hayas estructurado tu código.
+        
+    } catch (NumberFormatException e) {
+        System.out.println("El texto ingresado no es un número entero válido.");
+        // Opcional: mostrar un mensaje de error al usuario.
+    }
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -14,7 +14,7 @@ import javax.swing.DefaultListModel;
 public class Figura {
     
     private String Nombre;
-    
+
     public DefaultListModel<Punto> listaPuntos;
     
     public static int escala = 20;
@@ -56,4 +56,6 @@ public class Figura {
         }
     }
     
+
+
 }
