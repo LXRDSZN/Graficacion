@@ -30,4 +30,5 @@ public class Punto {
         rend.setColor(Color.GOLD);
         rend.circle(Px * Figura.escala, Py * Figura.escala, 10);
     }
+ 
 }

@@ -34,12 +34,14 @@ public class Canvas implements ApplicationListener{
         //listaFiguras.addElement(new Figura("Figu2"));
         //listaFiguras.addElement(new Figura("Figu3"));
     }
-    
+
+
+
     @Override
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
-        rend = new ShapeRenderer();
+        rend = new ShapeRenderer();        
     }
 
     @Override
@@ -48,7 +50,6 @@ public class Canvas implements ApplicationListener{
 
     @Override
     public void render() {
-        
         //Limpiar con color de fondo.
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -73,15 +74,10 @@ public class Canvas implements ApplicationListener{
         for (int i = 0; i < listaFiguras.size(); i++) {
             listaFiguras.get(i).dibujar(rend);
         }
-        //generador de linea a punto x a punto xy
-       // rend.setColor(Color.RED);
-        //for(int l = 0;l <= listaFiguras.size(); l++){
-            
-          //  rend.rec
         //}
         //rend.setColor(Color.RED);
         //rend.rectLine(120, 220, 300, 320, 5);
-        //rend.end();
+        rend.end();
     }
 
     @Override

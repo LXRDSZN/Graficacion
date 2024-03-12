@@ -55,4 +55,5 @@ public class Figura {
             listaPuntos.get(i).dibujar(rend);
         }
     }
+    
 }
