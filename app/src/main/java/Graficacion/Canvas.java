@@ -119,7 +119,7 @@ public class Canvas implements ApplicationListener{
         }
 
         rend.end(); // Finalizar el dibujo de los puntos
->>>>>>> 8aaa4ddf917c204657086a3eb8537ac7988ad144
+
     }
 
 
