@@ -39,9 +39,9 @@ public class Figura {
         listaPuntos = new DefaultListModel<>();
         
 
-        listaPuntos.addElement(new Punto(1, 1));
-        listaPuntos.addElement(new Punto(2, 2));
-        listaPuntos.addElement(new Punto(2, 1)); 
+       //listaPuntos.addElement(new Punto(1, 1));
+       //listaPuntos.addElement(new Punto(2, 2));
+       //listaPuntos.addElement(new Punto(2, 1)); 
     }
 
     @Override
