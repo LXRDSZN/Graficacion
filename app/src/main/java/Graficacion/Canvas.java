@@ -66,12 +66,10 @@ public class Canvas implements ApplicationListener{
         for (int x = 0; x <= Gdx.graphics.getWidth(); x += 20) {
             rend.line(x, 0, x, Gdx.graphics.getHeight());
         }
-<<<<<<< HEAD
         //}
         //rend.setColor(Color.RED);
         //rend.rectLine(120, 220, 300, 320, 5);
         rend.end();
-=======
 
         rend.end(); // Finalizar el dibujo de líneas horizontales y verticales
 
@@ -119,7 +117,7 @@ public class Canvas implements ApplicationListener{
         }
 
         rend.end(); // Finalizar el dibujo de los puntos
->>>>>>> 8aaa4ddf917c204657086a3eb8537ac7988ad144
+
     }
 
 
