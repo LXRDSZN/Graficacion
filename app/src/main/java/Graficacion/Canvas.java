@@ -22,12 +22,36 @@ public class Canvas implements ApplicationListener{
     SpriteBatch batch;
     BitmapFont font;
     ShapeRenderer rend;
-    
-    // Dentro de la clase Canvas
-public void setEspaciado(int nuevoEspaciado) {
-    this.espaciado = nuevoEspaciado;
-}
-     
+
+    public void setEspaciado(int nuevoEspaciado) {
+        int antiguoEspaciado = this.espaciado;
+        this.espaciado = nuevoEspaciado;
+
+        // Calcular el factor de escala
+        float factorEscala = (float) nuevoEspaciado / antiguoEspaciado;
+
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                // Recalcular las coordenadas de los puntos existentes
+                for (int i = 0; i < listaFiguras.size(); i++) {
+                    DefaultListModel<Punto> puntos = listaFiguras.get(i).listaPuntos;
+                    for (int j = 0; j < puntos.size(); j++) {
+                        Punto punto = puntos.get(j);
+                        punto.Px = (int) (punto.Px * factorEscala);
+                        punto.Py = (int) (punto.Py * factorEscala);
+                    }
+                }
+
+                // Volver a dibujar los puntos en el lienzo con las nuevas coordenadas escaladas
+                render();
+            }
+        });
+    }
+
+
+
+
     public DefaultListModel<Figura> listaFiguras;
 
     public Canvas() {

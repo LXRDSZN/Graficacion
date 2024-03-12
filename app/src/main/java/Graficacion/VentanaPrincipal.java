@@ -18,29 +18,29 @@ import javax.swing.DefaultListModel;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     public Canvas c;
-    
+
     Figura figuraSeleccionada = null;
     Punto puntoseleccionado = null;
-    
+
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        
+
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1280;
         config.height = 720;
         config.vSyncEnabled = true;
         config.foregroundFPS = 60;
-        
+
         c = new Canvas();
         LwjglAWTCanvas panelCanvas = new LwjglAWTCanvas(c, config);
         jPanel1.add(panelCanvas.getCanvas());
-        
+
         jList1.setModel(c.listaFiguras);
         jList2.setModel(c.listaFiguras.get(0).listaPuntos);
-        
+
         jList1.addListSelectionListener(new ListSelectionListener()
         {
             @Override
@@ -62,14 +62,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 }
             }
         });
-        
+
         jList2.addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(figuraSeleccionada != null)
                 {
                     puntoseleccionado = jList2.getSelectedValue();
-                    
+
                     if(puntoseleccionado != null)
                     {
                         jTextField2.setText(""+puntoseleccionado.Px);
@@ -402,7 +402,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         if(figuraSeleccionada != null)
         {
             figuraSeleccionada.setNombre(jTextField1.getText());
-            
+
             jList1.updateUI();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -411,7 +411,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         if(figuraSeleccionada != null)
         {
             c.listaFiguras.removeElement(figuraSeleccionada);
-            
+
             jList1.updateUI();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -471,19 +471,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
          String textoIngresado = jTextField4.getText();
     try {
         int nuevoEspaciado = Integer.parseInt(textoIngresado);
-        
+
         // Asumiendo que 'c' es tu instancia de Canvas
         c.setEspaciado(nuevoEspaciado);
 
         // Aquí, actualizarías la vista de tu canvas si es necesario.
         // Esto podría implicar llamar a un método de redibujado específico,
-        // como c.redraw() o algo similar, dependiendo de cómo hayas estructurado tu código.
-        
+
+
     } catch (NumberFormatException e) {
         System.out.println("El texto ingresado no es un número entero válido.");
         // Opcional: mostrar un mensaje de error al usuario.
     }
     }//GEN-LAST:event_jButton8ActionPerformed
+
+
 
     /**
      * @param args the command line arguments
@@ -492,7 +494,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
