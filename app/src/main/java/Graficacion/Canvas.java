@@ -72,10 +72,12 @@ public void setEspaciado(int nuevoEspaciado) {
         for (int x = 0; x <= Gdx.graphics.getWidth(); x += espaciado) {
             rend.line(x, 0, x, Gdx.graphics.getHeight());
         }
+
         //}
         //rend.setColor(Color.RED);
         //rend.rectLine(120, 220, 300, 320, 5);
         rend.end();
+
 
         rend.end(); // Finalizar el dibujo de líneas horizontales y verticales
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.google.common.primitives.Ints;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -45,14 +46,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 figuraSeleccionada = jList1.getSelectedValue();
-                
-                if(figuraSeleccionada != null)
-                {
+
+                if (figuraSeleccionada != null) {
                     jTextField1.setText(figuraSeleccionada.getNombre());
-                }
-                else
-                {
+
+                    // Crear un nuevo modelo de lista para mostrar solo los puntos de la figura seleccionada
+                    DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
+                    for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
+                        puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+                    }
+                    jList2.setModel(puntosModel); // Mostrar los puntos de la nueva figura en JList2
+                } else {
                     jTextField1.setText("");
+                    jList2.setModel(new DefaultListModel<>()); // Limpiar la JList2 si no hay figura seleccionada
                 }
             }
         });
@@ -68,12 +74,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     {
                         jTextField2.setText(""+puntoseleccionado.Px);
                         jTextField3.setText(""+puntoseleccionado.Py);
+
                     }
                     else
                     {
                         jTextField2.setText("");
                         jTextField3.setText("");
+
                     }
+                    jList2.updateUI();
                 }
             }
         });
@@ -370,13 +379,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if(figuraSeleccionada != null)
-        {
+        if (figuraSeleccionada != null) {
             int px = Ints.tryParse(jTextField2.getText()).intValue();
             int py = Ints.tryParse(jTextField3.getText()).intValue();
-            
-            figuraSeleccionada.listaPuntos.addElement(new Punto(px,py));
-            
+
+            figuraSeleccionada.listaPuntos.addElement(new Punto(px, py));
+
+            DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
+            for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
+                puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+            }
+            jList2.setModel(puntosModel); // Actualizar el modelo de lista con los nuevos puntos
+            jList2.updateUI(); // Forzar la actualización visual inmediata del JList2
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -403,30 +417,41 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(figuraSeleccionada != null)
-        {
+        if (figuraSeleccionada != null && puntoseleccionado != null) {
             int px = Ints.tryParse(jTextField2.getText()).intValue();
             int py = Ints.tryParse(jTextField3.getText()).intValue();
-            
+
             puntoseleccionado.Px = px;
             puntoseleccionado.Py = py;
-            
-            jList2.updateUI();
+
+            DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
+            for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
+                puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+            }
+            jList2.setModel(puntosModel); // Actualizar el modelo de lista con los puntos editados
+            jList2.updateUI(); // Forzar la actualización visual inmediata del JList2
         }
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if(figuraSeleccionada != null)
-        {
-           figuraSeleccionada.listaPuntos.removeElement(puntoseleccionado);
-            
-           jList2.updateUI();
+        if (figuraSeleccionada != null && puntoseleccionado != null) {
+            figuraSeleccionada.listaPuntos.removeElement(puntoseleccionado);
+
+            DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
+            for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
+                puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+            }
+            jList2.setModel(puntosModel); // Actualizar el modelo de lista sin el punto eliminado
+            jList2.updateUI(); // Forzar la actualización visual inmediata del JList2
         }
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         Acercade  ac = new Acercade();
