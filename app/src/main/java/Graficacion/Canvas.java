@@ -107,7 +107,7 @@ public class Canvas implements ApplicationListener{
 
         rend.begin(ShapeRenderer.ShapeType.Line); // Iniciar el ShapeRenderer para dibujar las líneas que unen los puntos
 
-        rend.setColor(Color.GOLD); // Color de la línea
+        rend.setColor(Color.BLUE); // Color de la línea
 
         // Dibujar líneas que unen los puntos de cada figura
         for (int i = 0; i < listaFiguras.size(); i++) {
