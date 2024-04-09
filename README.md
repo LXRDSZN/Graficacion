@@ -1,8 +1,5 @@
 <article class="markdown-body entry-content container-lg" itemprop="text">
 <br>
-<div align="center" dir="auto">
-    <a target="_blank" rel="noopener noreferrer" href="/Alpharivs/dotfiles/blob/main/.github/assets/awesome.png"><img src="/Alpharivs/dotfiles/raw/main/.github/assets/awesome.png" alt="Rice Preview" style="max-width: 100%;"></a>
-</div>
 <br>
 <br>
 <p dir="auto"><a href="https://awesomewm.org/" rel="nofollow"><img alt="AwesomeWM Logo" height="160" align="left" src="https://camo.githubusercontent.com/a682e524f55880d0f58f95cb6008a01b74493036b71cb121ac7112429400a0dc/68747470733a2f2f617765736f6d65776d2e6f72672f646f632f6170692f696d616765732f4155544f47454e5f7769626f785f6c6f676f5f6c6f676f5f616e645f6e616d652e737667" data-canonical-src="https://awesomewm.org/doc/api/images/AUTOGEN_wibox_logo_logo_and_name.svg" style="max-width: 100%;"></a>
