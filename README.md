@@ -1,7 +1,4 @@
 <article class="markdown-body entry-content container-lg" itemprop="text">
-<div align="center" dir="auto">
-    <a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/89e05fa7a22bd16e985b9248f1eef40d8638a9a4e570a7eb9b11bbcad28c2b30/68747470733a2f2f617765736f6d65776d2e6f72672f696d616765732f617765736f6d652d6c6f676f2e737667"><img src="https://camo.githubusercontent.com/89e05fa7a22bd16e985b9248f1eef40d8638a9a4e570a7eb9b11bbcad28c2b30/68747470733a2f2f617765736f6d65776d2e6f72672f696d616765732f617765736f6d652d6c6f676f2e737667" data-canonical-src="https://awesomewm.org/images/awesome-logo.svg" style="max-width: 100%;"></a>
-</div>
 <br>
 <div align="center" dir="auto">
     <a target="_blank" rel="noopener noreferrer" href="/Alpharivs/dotfiles/blob/main/.github/assets/awesome.png"><img src="/Alpharivs/dotfiles/raw/main/.github/assets/awesome.png" alt="Rice Preview" style="max-width: 100%;"></a>
