@@ -2,7 +2,7 @@
 <br>
 <br>
 <br>
-<p dir="auto"><a href="https://www.jrebel.com/sites/rebel/files/image/2020-11/image-blog-what-is-gradle.jpg" rel="nofollow"><img alt="AwesomeWM Logo" height="160" align="left" src="https://camo.githubusercontent.com/a682e524f55880d0f58f95cb6008a01b74493036b71cb121ac7112429400a0dc/68747470733a2f2f617765736f6d65776d2e6f72672f646f632f6170692f696d616765732f4155544f47454e5f7769626f785f6c6f676f5f6c6f676f5f616e645f6e616d652e737667" data-canonical-src="https://awesomewm.org/doc/api/images/AUTOGEN_wibox_logo_logo_and_name.svg" style="max-width: 100%;"></a>
+<p dir="auto"><a href="" rel="nofollow"><img alt="AwesomeWM Logo" height="160" align="left" src="https://camo.githubusercontent.com/a682e524f55880d0f58f95cb6008a01b74493036b71cb121ac7112429400a0dc/68747470733a2f2f617765736f6d65776d2e6f72672f646f632f6170692f696d616765732f4155544f47454e5f7769626f785f6c6f676f5f6c6f676f5f616e645f6e616d652e737667" data-canonical-src="https://www.jrebel.com/sites/rebel/files/image/2020-11/image-blog-what-is-gradle.jpg" style="max-width: 100%;"></a>
 <b>  Aesthetic AwesomeWM Dotfiles  </b></p>
 <p dir="auto">Welcome to my AwesomeWM configuration files!</p>
 <p dir="auto">so yeah now i'm using awesomewm, looks like i'll be use this wm forever.</p>
