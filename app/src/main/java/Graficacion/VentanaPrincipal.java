@@ -7,9 +7,11 @@ package Graficacion;
 import com.badlogic.gdx.backends.lwjgl.LwjglAWTCanvas;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.google.common.primitives.Ints;
+import java.awt.Component;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +23,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     Figura figuraSeleccionada = null;
     Punto puntoseleccionado = null;
+    private Component frame;
 
     /**
      * Creates new form VentanaPrincipal
@@ -486,8 +489,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Acercade  ac = new Acercade();
-        ac.setVisible(true);
+        JOptionPane.showMessageDialog(frame, "-----Integrantes del equipo-----\n\n1) Alvarez Tufiño Lesly Fernanda\n\n2) Galicia Garces Cesar Ivan\n\n3) Martinez Turijan Emilio\n\n4) Hernandez  Garcia Pedro David\n\n5) Zuñiga Gutierrez Enrique Alejandro", "---Integrantes---", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
