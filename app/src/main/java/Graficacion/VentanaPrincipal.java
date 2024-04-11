@@ -127,9 +127,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        Traslación = new javax.swing.JPanel();
+        Traslacion = new javax.swing.JPanel();
         Escalamiento = new javax.swing.JPanel();
-        Rotación = new javax.swing.JPanel();
+        Rotacion = new javax.swing.JPanel();
         Sesgado = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -370,18 +370,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jSplitPane1.setRightComponent(jPanel3);
 
-        javax.swing.GroupLayout TraslaciónLayout = new javax.swing.GroupLayout(Traslación);
-        Traslación.setLayout(TraslaciónLayout);
-        TraslaciónLayout.setHorizontalGroup(
-            TraslaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout TraslacionLayout = new javax.swing.GroupLayout(Traslacion);
+        Traslacion.setLayout(TraslacionLayout);
+        TraslacionLayout.setHorizontalGroup(
+            TraslacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 471, Short.MAX_VALUE)
         );
-        TraslaciónLayout.setVerticalGroup(
-            TraslaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        TraslacionLayout.setVerticalGroup(
+            TraslacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Translación", Traslación);
+        jTabbedPane1.addTab("Translación", Traslacion);
 
         javax.swing.GroupLayout EscalamientoLayout = new javax.swing.GroupLayout(Escalamiento);
         Escalamiento.setLayout(EscalamientoLayout);
@@ -396,18 +396,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Escalamiento", Escalamiento);
 
-        javax.swing.GroupLayout RotaciónLayout = new javax.swing.GroupLayout(Rotación);
-        Rotación.setLayout(RotaciónLayout);
-        RotaciónLayout.setHorizontalGroup(
-            RotaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout RotacionLayout = new javax.swing.GroupLayout(Rotacion);
+        Rotacion.setLayout(RotacionLayout);
+        RotacionLayout.setHorizontalGroup(
+            RotacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 471, Short.MAX_VALUE)
         );
-        RotaciónLayout.setVerticalGroup(
-            RotaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        RotacionLayout.setVerticalGroup(
+            RotacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Rotación", Rotación);
+        jTabbedPane1.addTab("Rotación", Rotacion);
 
         javax.swing.GroupLayout SesgadoLayout = new javax.swing.GroupLayout(Sesgado);
         Sesgado.setLayout(SesgadoLayout);
@@ -628,9 +628,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Escalamiento;
-    private javax.swing.JPanel Rotación;
+    private javax.swing.JPanel Rotacion;
     private javax.swing.JPanel Sesgado;
-    private javax.swing.JPanel Traslación;
+    private javax.swing.JPanel Traslacion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
