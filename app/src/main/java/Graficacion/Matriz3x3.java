@@ -54,6 +54,9 @@ public class Matriz3x3 {
         }
     }
 
+    // public  static Matriz31 MultiplicarMatriz33por31(){
+         
+     //}
 
 
 }
