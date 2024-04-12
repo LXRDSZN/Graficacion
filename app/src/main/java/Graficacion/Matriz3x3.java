@@ -45,18 +45,17 @@ public class Matriz3x3 {
         return m;
     }
 
-    public void aplicarATodosLosPuntos(List<Punto> puntos) {
-        for (Punto punto : puntos) {
-            double xNuevo = matriz[0][0] * punto.getPx() + matriz[0][1] * punto.getPy() + matriz[0][2];
-            double yNuevo = matriz[1][0] * punto.getPx() + matriz[1][1] * punto.getPy() + matriz[1][2];
-            punto.setPx((int) xNuevo);
-            punto.setPy((int) yNuevo);
-        }
-    }
 
-    // public  static Matriz31 MultiplicarMatriz33por31(){
-         
-     //}
+    public static Matriz3x1 multmat33por31(Matriz3x3 m33, Matriz3x1 m31){
+
+        Matriz3x1 m = new Matriz3x1();
+        m.matriz[0] = m33.matriz[0][0] * m31.matriz[0] + m33.matriz[1][0] * m31.matriz[1] + m33.matriz[2][0] * m31.matriz[2];
+        m.matriz[1] = m33.matriz[0][1] * m31.matriz[0] + m33.matriz[1][1] * m31.matriz[1] + m33.matriz[2][1] * m31.matriz[2];
+        m.matriz[2] = m33.matriz[0][2] * m31.matriz[0] + m33.matriz[1][2] * m31.matriz[1] + m33.matriz[2][2] * m31.matriz[2];
+
+        return m;
+
+    }
 
 
 }

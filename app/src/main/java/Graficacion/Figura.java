@@ -33,15 +33,23 @@ public class Figura {
         this.Nombre = Nombre;
     }
 
+
+    public void tranformar(Matriz3x3 mt){
+
+        for (int i = 0; i < listaPuntos.size(); i++) {
+            listaPuntos.get(i).tranformar(mt);
+        }
+
+
+    }
+
+
+
     public Figura(String Nombre) {
         this.Nombre = Nombre;
         
         listaPuntos = new DefaultListModel<>();
-        
 
-       //listaPuntos.addElement(new Punto(1, 1));
-       //listaPuntos.addElement(new Punto(2, 2));
-       //listaPuntos.addElement(new Punto(2, 1)); 
     }
 
     @Override

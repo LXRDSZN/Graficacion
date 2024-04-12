@@ -14,15 +14,31 @@ import java.util.List;
  * @author libookami
  */
 public class Punto {
-    public int Px;
-    public int Py;
+    public float Px;
+    public float Py;
 
     public Punto(int Px, int Py) {
         this.Px = Px;
         this.Py = Py;
     }
 
-    public int getPy() {
+    public void tranformar(Matriz3x3 mt){
+
+        Matriz3x1 res = Matriz3x3.multmat33por31(mt,getMatriz());
+
+        Px = (int) res.matriz[0];
+        Py = (int) res.matriz[1];
+
+
+    }
+
+    public Matriz3x1 getMatriz(){
+
+        return new Matriz3x1(Px,Py,1);
+
+    }
+
+    public float getPy() {
         return Py;
     }
 
@@ -30,7 +46,7 @@ public class Punto {
         Py = py;
     }
 
-    public int getPx() {
+    public float getPx() {
         return Px;
     }
 
@@ -50,11 +66,7 @@ public class Punto {
     }
 
 
-    private List<Punto> puntos;
 
-    public void transformar(Matriz3x3 matriz) {
-        matriz.aplicarATodosLosPuntos(this.puntos);
-    }
 
 
 

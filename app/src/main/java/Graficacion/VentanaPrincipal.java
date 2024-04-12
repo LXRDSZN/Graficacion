@@ -6,8 +6,10 @@ package Graficacion;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglAWTCanvas;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.google.common.primitives.Floats;
 import com.google.common.primitives.Ints;
 import java.awt.Component;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.DefaultListModel;
@@ -162,10 +164,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(null));
 
         jScrollPane1.setViewportView(jList1);
 
@@ -288,7 +291,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jPanel2);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(null));
 
         jScrollPane2.setViewportView(jList2);
 
@@ -454,6 +457,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel8.setText("SY");
 
         jButton10.setText("Ejecutar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout EscalamientoLayout = new javax.swing.GroupLayout(Escalamiento);
         Escalamiento.setLayout(EscalamientoLayout);
@@ -496,6 +504,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel9.setText("Angulo");
 
         jButton11.setText("Ejecutar");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout RotacionLayout = new javax.swing.GroupLayout(Rotacion);
         Rotacion.setLayout(RotacionLayout);
@@ -532,6 +545,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel11.setText("SHy");
 
         jButton12.setText("Ejecutar");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
 
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -748,7 +766,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        // Boton de traslacion
+
+        float sx = Floats.tryParse(jTextField5.getText());
+        float sy = Floats.tryParse(jTextField6.getText());
+        Matriz3x3 m = Matriz3x3.traslacion(sx,sy);
+        figuraSeleccionada.tranformar(m);
+
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
@@ -758,6 +783,38 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+
+        // boton de escalado
+        float sx = Floats.tryParse(jTextField7.getText());
+        float sy = Floats.tryParse(jTextField8.getText());
+        Matriz3x3 m = Matriz3x3.escalado(sx,sy);
+
+        figuraSeleccionada.tranformar(m);
+
+
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // Boton de rotacion
+
+        float angulo = Floats.tryParse(jTextField9.getText());
+        Matriz3x3 m = Matriz3x3.rotacion(angulo);
+        figuraSeleccionada.tranformar(m);
+
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // Boton sesgado
+
+        float sx = Floats.tryParse(jTextField10.getText());
+        float sy = Floats.tryParse(jTextField11.getText());
+        Matriz3x3 m = Matriz3x3.sesgado(sx,sy);
+        figuraSeleccionada.tranformar(m);
+
+
+    }//GEN-LAST:event_jButton12ActionPerformed
 
 
 
