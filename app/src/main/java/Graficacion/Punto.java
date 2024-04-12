@@ -26,8 +26,8 @@ public class Punto {
 
         Matriz3x1 res = Matriz3x3.multmat33por31(mt,getMatriz());
 
-        Px = (int) res.matriz[0];
-        Py = (int) res.matriz[1];
+        Px = (float) res.matriz[0];
+        Py = (float) res.matriz[1];
 
 
     }

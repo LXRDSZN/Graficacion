@@ -23,7 +23,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public Canvas c;
 
-    Figura figuraSeleccionada = null;
+    static Figura figuraSeleccionada = null;
     Punto puntoseleccionado = null;
     private Component frame;
 
@@ -772,6 +772,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         float sy = Floats.tryParse(jTextField6.getText());
         Matriz3x3 m = Matriz3x3.traslacion(sx,sy);
         figuraSeleccionada.tranformar(m);
+        System.out.println(sx);
+        System.out.println(sy);
 
 
     }//GEN-LAST:event_jButton9ActionPerformed

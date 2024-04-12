@@ -23,6 +23,13 @@ public class Canvas implements ApplicationListener{
     BitmapFont font;
     ShapeRenderer rend;
 
+
+
+
+
+
+
+
     public void setEspaciado(int nuevoEspaciado) {
         int antiguoEspaciado = this.espaciado;
         this.espaciado = nuevoEspaciado;
@@ -68,9 +75,10 @@ public class Canvas implements ApplicationListener{
 
     @Override
     public void create() {
+
         batch = new SpriteBatch();
         font = new BitmapFont();
-        rend = new ShapeRenderer();        
+        rend = new ShapeRenderer();
     }
 
     @Override
@@ -82,6 +90,8 @@ public class Canvas implements ApplicationListener{
         //Limpiar con color de fondo.
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
 
         rend.begin(ShapeRenderer.ShapeType.Line); // Iniciar el ShapeRenderer para dibujar líneas
 
@@ -148,6 +158,7 @@ public class Canvas implements ApplicationListener{
             }
         }
         rend.end(); // Finalizar el dibujo de los puntos
+
 
     }
 

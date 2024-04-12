@@ -1,5 +1,6 @@
 package Graficacion;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Matriz3x3 {
@@ -53,7 +54,28 @@ public class Matriz3x3 {
         m.matriz[1] = m33.matriz[0][1] * m31.matriz[0] + m33.matriz[1][1] * m31.matriz[1] + m33.matriz[2][1] * m31.matriz[2];
         m.matriz[2] = m33.matriz[0][2] * m31.matriz[0] + m33.matriz[1][2] * m31.matriz[1] + m33.matriz[2][2] * m31.matriz[2];
 
+        m.matriz[0] = m33.matriz[0][0] * m31.matriz[0] + m33.matriz[0][1] * m31.matriz[1] + m33.matriz[0][2] * m31.matriz[2];
+        m.matriz[1] = m33.matriz[1][0] * m31.matriz[0] + m33.matriz[1][1] * m31.matriz[1] + m33.matriz[1][2] * m31.matriz[2];
+        m.matriz[2] = m33.matriz[2][0] * m31.matriz[0] + m33.matriz[2][1] * m31.matriz[1] + m33.matriz[2][2] * m31.matriz[2];
+
+        // Imprimiendo cada componente de la matriz y del vector, así como los resultados intermedios
+
+        System.out.println("Componentes de la matriz 3x3:");
+        System.out.println("[" + m33.matriz[0][0] + ", " + m33.matriz[0][1] + ", " + m33.matriz[0][2] + "]");
+        System.out.println("[" + m33.matriz[1][0] + ", " + m33.matriz[1][1] + ", " + m33.matriz[1][2] + "]");
+        System.out.println("[" + m33.matriz[2][0] + ", " + m33.matriz[2][1] + ", " + m33.matriz[2][2] + "]");
+
+        System.out.println("Componentes del vector 3x1:");
+        System.out.println("[" + m31.matriz[0] + ", " + m31.matriz[1] + ", " + m31.matriz[2] + "]");
+
+        System.out.println("Resultados de la multiplicación:");
+        System.out.println("X = " + m.matriz[0]);
+        System.out.println("Y = " + m.matriz[1]);
+        System.out.println("Homogenea = " + m.matriz[2]);
+
         return m;
+
+
 
     }
 
