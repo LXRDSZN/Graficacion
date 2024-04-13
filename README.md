@@ -1,5 +1,5 @@
 
-<h1 align="center">✨ Bienvenido a Mi Repositorio de Métodos Numéricos ✨</h1>
+<h1 align="center">✨ Bienvenido a Mi Repositorio de Graficacion ✨</h1>
 
 <p align="center">
   ¡Hola! Gracias por visitar mi repositorio. Aqui encontraras un proyecto realizado en la materia de Graficacion, que consta de poner un px y py para poner un punto, asi mismo se podra crear figuras dependiendo los puntos que pongas, tambien podras modificar su rotacion, Translacion, sesgado y escalamiento
