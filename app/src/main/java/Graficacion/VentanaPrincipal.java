@@ -9,10 +9,16 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.google.common.primitives.Floats;
 import com.google.common.primitives.Ints;
 import java.awt.Component;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.prefs.Preferences;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +32,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     static Figura figuraSeleccionada = null;
     Punto puntoseleccionado = null;
     private Component frame;
-
+    private Preferences prefs = Preferences.userNodeForPackage(VentanaPrincipal.class);
+    private JFileChooser JFCSave = new JFileChooser();
+   
     /**
      * Creates new form VentanaPrincipal
      */
@@ -164,11 +172,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(BevelBorder.RAISED));
-
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jScrollPane1.setViewportView(jList1);
 
@@ -291,7 +298,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jPanel2);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jScrollPane2.setViewportView(jList2);
 
@@ -758,7 +765,38 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+   // Definir la ruta base del proyecto (puede necesitar ajustarse según tu configuración de IDE)
+    String rutaBase = System.getProperty("user.dir");
+    File directorioDeseado = new File(rutaBase, "src/main/java/Graficacion");
+
+    // Crear el directorio si no existe
+    if (!directorioDeseado.exists()) {
+        directorioDeseado.mkdirs();
+    }
+
+    // Crear el archivo en el directorio específico
+    File archivoSeleccionado = new File(directorioDeseado, "coordenadas.txt");
+
+    // Construye la cadena de texto con los datos a guardar
+    StringBuilder s = new StringBuilder();
+    for (int i = 0; i < c.listaFiguras.size(); i++) {
+        Figura f = c.listaFiguras.get(i);
+        s.append(f.getNombre());
+        for (int j = 0; j < f.listaPuntos.size(); j++) {
+            Punto p = f.listaPuntos.get(j);
+            s.append(",").append(p.Px).append(",").append(p.Py);
+        }
+        s.append("\n");
+    }
+
+    // Escribe los datos en el archivo
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoSeleccionado))) {
+        writer.write(s.toString());
+        System.out.println("Datos guardados en: " + archivoSeleccionado.getAbsolutePath());
+    } catch (IOException ex) {
+        System.err.println("Error al escribir el archivo: " + ex.getMessage());
+        ex.printStackTrace();
+    }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
