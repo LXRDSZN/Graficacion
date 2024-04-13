@@ -17,7 +17,8 @@ public class Punto {
     public float Px;
     public float Py;
 
-    public Punto(int Px, int Py) {
+     //cambio de int a float
+    public Punto(float Px, float Py) {
         this.Px = Px;
         this.Py = Py;
     }

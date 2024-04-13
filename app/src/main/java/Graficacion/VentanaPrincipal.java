@@ -9,8 +9,10 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.google.common.primitives.Floats;
 import com.google.common.primitives.Ints;
 import java.awt.Component;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.prefs.Preferences;
@@ -34,7 +36,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private Component frame;
     private Preferences prefs = Preferences.userNodeForPackage(VentanaPrincipal.class);
     private JFileChooser JFCSave = new JFileChooser();
-   
+    private JFileChooser JFCOpen = new JFileChooser();
+    private File archivoSeleccionado;  // Variable de clase para almacenar el archivo seleccionado
     /**
      * Creates new form VentanaPrincipal
      */
@@ -569,20 +572,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         SesgadoLayout.setHorizontalGroup(
             SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SesgadoLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SesgadoLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addGap(69, 69, 69)
-                        .addGroup(SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                            .addComponent(jTextField11)))
-                    .addGroup(SesgadoLayout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jButton12)))
-                .addContainerGap(584, Short.MAX_VALUE))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addGap(69, 69, 69)
+                .addGroup(SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(jTextField11))
+                .addGap(60, 60, 60)
+                .addComponent(jButton12)
+                .addContainerGap(443, Short.MAX_VALUE))
         );
         SesgadoLayout.setVerticalGroup(
             SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -591,13 +591,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGroup(SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(33, 33, 33)
-                .addComponent(jButton12)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addGroup(SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SesgadoLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(SesgadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)))
+                    .addGroup(SesgadoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton12)))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Sesgado", Sesgado);
@@ -800,9 +803,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+    // Define la ruta del archivo desde donde leeremos los datos
+        String rutaBase = System.getProperty("user.dir");
+        File directorioDeseado = new File(rutaBase, "src/main/java/Graficacion");
+        archivoSeleccionado = new File(directorioDeseado, "coordenadas.txt");
+        JFileChooser JFCOpen = new JFileChooser();
+        JFCOpen.setSelectedFile(archivoSeleccionado);
+        
+        if (JFCOpen.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            archivoSeleccionado = JFCOpen.getSelectedFile(); // Actualiza archivoSeleccionado con el archivo elegido
+            // Guarda la última ruta usada
+            prefs.put("ULTIMA_RUTA_USADA", archivoSeleccionado.getPath());
+        }
+        Cargar();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
+ 
+    public void Cargar() {
+    try (BufferedReader reader = new BufferedReader(new FileReader(archivoSeleccionado.getPath()))) {
+        String Linea;
+        while ((Linea = reader.readLine()) != null) {
+            String[] tokens = Linea.split(",");
+            
+            Figura f = new Figura(tokens[0]);  // Suponemos que tokens[0] es el nombre de la figura
+            for (int i = 1; i < tokens.length - 1; i += 2) {
+                try {
+                    float x = Float.parseFloat(tokens[i]);
+                    float y = Float.parseFloat(tokens[i+1]);
+                    
+                    Punto p = new Punto(x, y);
+                    f.listaPuntos.addElement(p);
+                } catch (NumberFormatException nfe) {
+                    System.err.println("Error al convertir a número: " + nfe.getMessage());
+                }
+            }
+            c.listaFiguras.addElement(f);
+        }
+    } catch (IOException e) {
+        System.err.println("Error al leer el archivo: " + e.getMessage());
+        e.printStackTrace();
+    }      
+    }
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // Boton de traslacion
 
