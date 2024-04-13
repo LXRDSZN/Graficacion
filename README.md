@@ -19,7 +19,7 @@
 </p>
 
 ## Contáctame
-<p align="center">
+<p>
   LXRDSZN
 </p>
 <p align="center">
@@ -35,7 +35,7 @@
 </p>
 
 
-<p align="center">
+<p>
   NOOBRATE
 </p>
 <p align="center">
