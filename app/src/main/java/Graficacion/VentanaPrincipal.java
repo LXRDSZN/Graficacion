@@ -78,6 +78,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 }
             }
         });
+         cargarDatosIniciales();  // Carga los datos al iniciar
 
         jList2.addListSelectionListener(new ListSelectionListener(){
             @Override
@@ -818,6 +819,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         Cargar();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
  
+    private void cargarDatosIniciales() {
+    // Define la ruta del archivo desde donde leeremos los datos
+    String rutaBase = System.getProperty("user.dir");
+    File directorioDeseado = new File(rutaBase, "src/main/java/Graficacion");
+    archivoSeleccionado = new File(directorioDeseado, "coordenadas.txt");
+    Cargar();
+}
     public void Cargar() {
     try (BufferedReader reader = new BufferedReader(new FileReader(archivoSeleccionado.getPath()))) {
         String Linea;

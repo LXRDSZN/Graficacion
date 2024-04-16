@@ -64,7 +64,7 @@ public class Canvas implements ApplicationListener{
     public Canvas() {
         listaFiguras = new DefaultListModel<>();
         
-        listaFiguras.addElement(new Figura("Figu1"));
+        listaFiguras.addElement(new Figura(""));
         //listaFiguras.addElement(new Figura("Figu2"));
         //listaFiguras.addElement(new Figura("Figu3"));
     }
