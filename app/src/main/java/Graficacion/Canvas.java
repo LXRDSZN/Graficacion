@@ -8,8 +8,15 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import javax.swing.DefaultListModel;
 
@@ -25,12 +32,16 @@ public class Canvas implements ApplicationListener{
     BitmapFont font;
     ShapeRenderer rend;
 
+    //3D
+    Environment env;
+    ModelBatch batch3d;
+    ModelBuilder builder3d;
 
+    PerspectiveCamera cam;
+    CameraInputController caminput;
 
-
-
-
-
+    Model m1;
+    ModelInstance m1instance;
 
     public void setEspaciado(int nuevoEspaciado) {
         int antiguoEspaciado = this.espaciado;
