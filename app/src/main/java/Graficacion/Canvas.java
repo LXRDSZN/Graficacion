@@ -18,7 +18,9 @@ import javax.swing.DefaultListModel;
  * @author libookami
  */
 public class Canvas implements ApplicationListener{
-
+    
+    VentanaPrincipal v;
+    
     SpriteBatch batch;
     BitmapFont font;
     ShapeRenderer rend;
@@ -61,12 +63,11 @@ public class Canvas implements ApplicationListener{
 
     public DefaultListModel<Figura> listaFiguras;
 
-    public Canvas() {
+    public Canvas(VentanaPrincipal Ventana) {
+        this.v = Ventana;
         listaFiguras = new DefaultListModel<>();
         
         listaFiguras.addElement(new Figura(""));
-        //listaFiguras.addElement(new Figura("Figu2"));
-        //listaFiguras.addElement(new Figura("Figu3"));
     }
 
     private int espaciado = 20; // Valor por defecto
@@ -84,10 +85,10 @@ public class Canvas implements ApplicationListener{
     @Override
     public void resize(int i, int i1) {
     }
-
-    @Override
-    public void render() {
-        //Limpiar con color de fondo.
+    //renders 2d y 3d
+    
+    void render2d(){
+         //Limpiar con color de fondo.
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -158,8 +159,21 @@ public class Canvas implements ApplicationListener{
             }
         }
         rend.end(); // Finalizar el dibujo de los puntos
-
-
+    }
+    
+    void render3d(){
+      //Limpiar con color de fondo.
+        Gdx.gl.glClearColor(1f, 0.25f, 0.25f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);   
+    }
+    
+    @Override
+    public void render() {
+        if(v.jRadioButton1.isSelected()){
+            render2d();
+        }else{
+            render3d();
+        }
     }
 
 
