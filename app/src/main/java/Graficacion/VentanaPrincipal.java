@@ -794,9 +794,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jButton15)
-                                    .addComponent(jLabel12)))
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addGap(106, 106, 106)
+                                    .addComponent(jLabel12))
+                                .addGap(50, 50, 50)
                                 .addComponent(jButton14)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1249,12 +1248,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
+    public javax.swing.JButton jButton13;
+    public javax.swing.JButton jButton14;
+    public javax.swing.JButton jButton15;
+    public javax.swing.JButton jButton16;
+    public javax.swing.JButton jButton17;
+    public javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;

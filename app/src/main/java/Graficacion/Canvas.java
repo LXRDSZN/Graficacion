@@ -9,13 +9,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import javax.swing.DefaultListModel;
@@ -83,14 +89,55 @@ public class Canvas implements ApplicationListener{
 
     private int espaciado = 20; // Valor por defecto
 
-  
-
-    @Override
-    public void create() {
-
+   void inicializar2d()
+    {
         batch = new SpriteBatch();
         font = new BitmapFont();
         rend = new ShapeRenderer();
+    }
+    void inicializar3d()
+    {
+        env = new Environment();
+        env.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+        env.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+        
+        DefaultShader.Config shader_config = new DefaultShader.Config();
+        shader_config.numDirectionalLights = 1;
+        shader_config.numPointLights = 0;
+        shader_config.numBones = 16;
+        
+        batch3d = new ModelBatch(new DefaultShaderProvider(shader_config));
+        
+        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam.position.set(10f,10,10f);
+        cam.lookAt(0, 0, 0);
+        cam.near = 1f;
+        cam.far = 300f;
+        cam.update();
+        
+        builder3d = new ModelBuilder();
+        
+        m1 = builder3d.createBox(5f, 5f, 5f, //Tamaño
+                                new Material(ColorAttribute.createDiffuse(Color.GOLD)), //Color
+                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        
+        m1instance = new ModelInstance(m1);
+        
+        caminput = new CameraInputController(cam);
+        Gdx.input.setInputProcessor(caminput);
+    }
+
+    @Override
+    public void create() {
+        
+        System.out.println("Ejecutado create");
+        inicializar2d();
+        inicializar3d();
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        rend = new ShapeRenderer();
+        
+        
     }
 
     @Override
@@ -173,9 +220,44 @@ public class Canvas implements ApplicationListener{
     }
     
     void render3d(){
-      //Limpiar con color de fondo.
-        Gdx.gl.glClearColor(1f, 0.25f, 0.25f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);   
+     //Limpiar con color de fondo.       
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        
+        
+        //mover camara con botones de 3D
+        
+        //mover camara con respecto a y
+        if(v.jButton13.getModel().isPressed()){
+            cam.position.y -= 0.1;
+        }
+        if(v.jButton16.getModel().isPressed()){
+            cam.position.y +=0.1;
+        }
+        
+        //Mover camara con respecto a x
+        
+         if(v.jButton14.getModel().isPressed()){
+            cam.position.x -= 0.1;
+        }
+        if(v.jButton15.getModel().isPressed()){
+            cam.position.x +=0.1;
+        }
+        //Mover camara con respecto al frente y atras
+        
+        if(v.jButton17.getModel().isPressed()){
+            cam.position.z -= 0.1;
+        }
+        if(v.jButton18.getModel().isPressed()){
+            cam.position.z +=0.1;
+        }
+        
+        cam.update();
+        caminput.update();
+        
+        batch3d.begin(cam);
+        batch3d.render(m1instance,env);
+        batch3d.end();
     }
     
     @Override
@@ -202,6 +284,8 @@ public class Canvas implements ApplicationListener{
         batch.dispose();
         font.dispose();
         rend.dispose();
+        
+        m1.dispose();
     }
     
 }
