@@ -49,6 +49,8 @@ public class Canvas implements ApplicationListener{
     Model m1;
     ModelInstance m1instance;
 
+
+
     public void setEspaciado(int nuevoEspaciado) {
         int antiguoEspaciado = this.espaciado;
         this.espaciado = nuevoEspaciado;
@@ -260,6 +262,8 @@ public class Canvas implements ApplicationListener{
         batch3d.end();
     }
     
+    
+  
     @Override
     public void render() {
         if(v.jRadioButton1.isSelected()){
@@ -268,7 +272,45 @@ public class Canvas implements ApplicationListener{
             render3d();
         }
     }
+        //modelo de figuras primitivas
+public void crearModelo(final String tipo) {
+    Gdx.app.postRunnable(new Runnable() {
+        @Override
+        public void run() {
+            if (m1instance != null) {
+                m1.dispose();  // Liberar el modelo anterior
+                m1instance = null;
+            }
 
+            switch (tipo) {
+                case "CUBO":
+                    m1 = builder3d.createBox(5f, 5f, 5f, 
+                            new Material(ColorAttribute.createDiffuse(Color.GOLD)), 
+                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    break;
+                case "ESFERA":
+                    m1 = builder3d.createSphere(5f, 5f, 5f, 32, 32,
+                            new Material(ColorAttribute.createDiffuse(Color.BLUE)),
+                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    break;
+                case "CILINDRO":
+                    m1 = builder3d.createCylinder(5f, 10f, 5f, 32,
+                            new Material(ColorAttribute.createDiffuse(Color.RED)),
+                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    break;
+                case "CONO":
+                    m1 = builder3d.createCone(5f, 10f, 5f, 32,
+                            new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    break;
+                default:
+                    System.out.println("Tipo no reconocido: " + tipo);
+                    return;
+            }
+            m1instance = new ModelInstance(m1);
+        }
+    });
+}
 
 
     @Override

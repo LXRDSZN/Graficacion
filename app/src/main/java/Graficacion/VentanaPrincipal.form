@@ -1142,10 +1142,13 @@
                             <StringItem index="1" value="CILINDRO"/>
                             <StringItem index="2" value="ESFERA"/>
                             <StringItem index="3" value="CONO"/>
-                            <StringItem index="4" value=" "/>
+                            <StringItem index="4" value=""/>
                           </StringArray>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+                      </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                       </AuxValues>
