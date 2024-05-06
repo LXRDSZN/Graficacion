@@ -33,7 +33,6 @@ import javax.swing.DefaultListModel;
 public class Canvas implements ApplicationListener{
     
     VentanaPrincipal v;
-    
     SpriteBatch batch;
     BitmapFont font;
     ShapeRenderer rend;
