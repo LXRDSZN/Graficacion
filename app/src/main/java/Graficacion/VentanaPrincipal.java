@@ -33,8 +33,7 @@ import javax.swing.JOptionPane;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     public Canvas c;
-   public Obj3D Objetos3D;  // Objeto para manejar figuras 3D.
-
+    public Obj3D obj;
     static Figura figuraSeleccionada = null;
     Punto puntoseleccionado = null;
     private Component frame;
@@ -47,21 +46,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1280;
         config.height = 720;
         config.vSyncEnabled = true;
         config.foregroundFPS = 60;
-   
         c = new Canvas(this);
+        obj = new Obj3D(this);
         LwjglAWTCanvas panelCanvas = new LwjglAWTCanvas(c, config);
         jPanel1.add(panelCanvas.getCanvas());
         jList1.setModel(c.listaFiguras);
-      
         jList2.setModel(c.listaFiguras.get(0).listaPuntos);
-        jList1.addListSelectionListener(new ListSelectionListener()
-        {
+        jList3.setModel(obj.listaFiguras3d); 
+        //Metodo para mostrar los puntos en una figura seleccionada
+        jList1.addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 figuraSeleccionada = jList1.getSelectedValue();
@@ -81,10 +79,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 }
             }
         });
-        //añadimos el nombre de las figuras 3d en Jlist3 
-
-         cargarDatosIniciales();  // Carga los datos al iniciar
-
+       
+        // Carga los datos al iniciar
+        cargarDatosIniciales();  
+        //metodo para modificar los puntos
         jList2.addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -109,13 +107,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         
-        
+        jList3.addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                figuraSeleccionada = jList3.getSelectedValue();
+
+                if (figuraSeleccionada != null) {
+                    jTextField1.setText(figuraSeleccionada.getNombre());
+
+                    // Crear un nuevo modelo de lista para mostrar solo los puntos de la figura seleccionada
+                    DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
+                    for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
+                        puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+                    }
+                    jList2.setModel(puntosModel); // Mostrar los puntos de la nueva figura en JList2
+                } else {
+                    jTextField1.setText("");
+                    jList2.setModel(new DefaultListModel<>()); // Limpiar la JList2 si no hay figura seleccionada
+                }
+            }
+        });
     }
-
-
-
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -711,6 +723,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         jButton20.setText("Borrar");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
 
         jLabel14.setText("SY");
 
@@ -988,7 +1005,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //boton para agregar puntos
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (figuraSeleccionada != null) {
             int px = Ints.tryParse(jTextField2.getText()).intValue();
@@ -1004,11 +1021,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             jList2.updateUI(); // Forzar la actualización visual inmediata del JList2
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    //boton para agregar un nombre a un cojunto de puntos 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         c.listaFiguras.addElement(new Figura(jTextField1.getText()));
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    //boton para editar el nombe 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(figuraSeleccionada != null)
         {
@@ -1017,7 +1034,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             jList1.updateUI();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    //boton para eliminar el nombre de los puntos 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(figuraSeleccionada != null)
         {
@@ -1026,7 +1043,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             jList1.updateUI();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    //boton para editar los puntos
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         if (figuraSeleccionada != null && puntoseleccionado != null) {
             int px = Ints.tryParse(jTextField2.getText()).intValue();
@@ -1044,7 +1061,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    //boton para borrar puntos 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         if (figuraSeleccionada != null && puntoseleccionado != null) {
             figuraSeleccionada.listaPuntos.removeElement(puntoseleccionado);
@@ -1063,7 +1080,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-
+    //boton para ver loas integrantes del proyecto
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         JOptionPane.showMessageDialog(frame, "-----Integrantes del equipo-----\n\n1) Alvarez Tufiño Lesly Fernanda\n\n2) Galicia Garces Cesar Ivan\n\n3) Martinez Turijan Emilio\n\n4) Hernandez  Garcia Pedro David\n\n5) Zuñiga Gutierrez Enrique Alejandro", "---Integrantes---", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -1076,25 +1093,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         System.out.println("El texto ingresado no es un número entero válido.");
     }
     }//GEN-LAST:event_jTextField4ActionPerformed
-
+    //boton para definir el tamaño de la cuadricula
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
          String textoIngresado = jTextField4.getText();
     try {
         int nuevoEspaciado = Integer.parseInt(textoIngresado);
-
-        // Asumiendo que 'c' es tu instancia de Canvas
+        
         c.setEspaciado(nuevoEspaciado);
-
-        // Aquí, actualizarías la vista de tu canvas si es necesario.
-        // Esto podría implicar llamar a un método de redibujado específico,
-
-
     } catch (NumberFormatException e) {
         System.out.println("El texto ingresado no es un número entero válido.");
         // Opcional: mostrar un mensaje de error al usuario.
     }
     }//GEN-LAST:event_jButton8ActionPerformed
-
+    //Boton u item para ctrl + s para guardar las puntos 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
    // Definir la ruta base del proyecto (puede necesitar ajustarse según tu configuración de IDE)
     String rutaBase = System.getProperty("user.dir");
@@ -1120,7 +1131,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         s.append("\n");
     }
 
-    // Escribe los datos en el archivo
+    // Metodo que Escribe los datos en el archivo
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoSeleccionado))) {
         writer.write(s.toString());
         System.out.println("Datos guardados en: " + archivoSeleccionado.getAbsolutePath());
@@ -1129,7 +1140,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ex.printStackTrace();
     }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
+    //Metodo para importar El nombre Y coordenadas de un txt
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
     // Define la ruta del archivo desde donde leeremos los datos
         String rutaBase = System.getProperty("user.dir");
@@ -1145,7 +1156,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         Cargar();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
- 
+    //Metodo para cargar los puntos de la ruta definida
     private void cargarDatosIniciales() {
     // Define la ruta del archivo desde donde leeremos los datos
     String rutaBase = System.getProperty("user.dir");
@@ -1153,6 +1164,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     archivoSeleccionado = new File(directorioDeseado, "coordenadas.txt");
     Cargar();
 }
+    //Metodo para Cargar los puntos Guardados
     public void Cargar() {
     try (BufferedReader reader = new BufferedReader(new FileReader(archivoSeleccionado.getPath()))) {
         String Linea;
@@ -1178,9 +1190,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         e.printStackTrace();
     }      
     }
+    // Boton de traslacion
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // Boton de traslacion
-
         float sx = Floats.tryParse(jTextField5.getText());
         float sy = Floats.tryParse(jTextField6.getText());
         Matriz3x3 m = Matriz3x3.traslacion(sx,sy);
@@ -1198,10 +1209,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
-
+    // boton de escalado
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-
-        // boton de escalado
         float sx = Floats.tryParse(jTextField7.getText());
         float sy = Floats.tryParse(jTextField8.getText());
         Matriz3x3 m = Matriz3x3.escalado(sx,sy);
@@ -1210,18 +1219,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton10ActionPerformed
-
+    // Boton de rotacion
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // Boton de rotacion
-
         float angulo = Floats.tryParse(jTextField9.getText());
         Matriz3x3 m = Matriz3x3.rotacion(angulo);
         figuraSeleccionada.tranformar(m);
 
     }//GEN-LAST:event_jButton11ActionPerformed
-
+    // Boton sesgado
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // Boton sesgado
+        
 
         float sx = Floats.tryParse(jTextField10.getText());
         float sy = Floats.tryParse(jTextField11.getText());
@@ -1255,10 +1262,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     //agregar figura 3d
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        //Metodo canva3d para agregar nombres de figuras al jList2
-        
-         c.listaFiguras.addElement(new Figura(jTextField12.getText()));
-        
+        //Metodo canva3d para agregar nombres de figuras al jList3
+         obj.listaFiguras3d.addElement(new Figura3d(jTextField12.getText()));
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1268,6 +1273,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField12ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        // TODO add your handling code here:
+       if(figuraSeleccionada != null)
+        {
+            obj.listaFiguras3d.removeElement(figuraSeleccionada);
+
+            jList3.updateUI();
+        }
+    }//GEN-LAST:event_jButton20ActionPerformed
 
 
 
@@ -1358,7 +1373,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<Figura> jList1;
     private javax.swing.JList<Punto> jList2;
-    private javax.swing.JList<Figura> jList3;
+    public javax.swing.JList<Figura3d> jList3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

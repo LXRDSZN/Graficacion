@@ -31,25 +31,21 @@ import javax.swing.DefaultListModel;
  * @author libookami
  */
 public class Canvas implements ApplicationListener{
-    
     VentanaPrincipal v;
     SpriteBatch batch;
     BitmapFont font;
     ShapeRenderer rend;
-
     //3D
     Environment env;
     ModelBatch batch3d;
     ModelBuilder builder3d;
-
     PerspectiveCamera cam;
     CameraInputController caminput;
-
     Model m1;
     ModelInstance m1instance;
 
 
-
+    //Metodo para la colocacion de puntos 
     public void setEspaciado(int nuevoEspaciado) {
         int antiguoEspaciado = this.espaciado;
         this.espaciado = nuevoEspaciado;
@@ -75,29 +71,23 @@ public class Canvas implements ApplicationListener{
             }
         });
     }
-
-
-
-
-    public DefaultListModel<Figura> listaFiguras;
-
+        public DefaultListModel<Figura> listaFiguras;
+    //Creacion de Nombres para jlist1
     public Canvas(VentanaPrincipal Ventana) {
         this.v = Ventana;
         listaFiguras = new DefaultListModel<>();
         
         listaFiguras.addElement(new Figura(""));
     }
-
-    private int espaciado = 20; // Valor por defecto
-
-   void inicializar2d()
-    {
+        private int espaciado = 20; 
+    //Metodo para inicializar 2d
+    void inicializar2d(){
         batch = new SpriteBatch();
         font = new BitmapFont();
         rend = new ShapeRenderer();
     }
-    void inicializar3d()
-    {
+    //Metodo para la creacion de renderizado 3d Para mostrar primitiva por defecto
+    void inicializar3d(){
         env = new Environment();
         env.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
         env.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
@@ -127,10 +117,9 @@ public class Canvas implements ApplicationListener{
         caminput = new CameraInputController(cam);
         Gdx.input.setInputProcessor(caminput);
     }
-
+    //Mtodo Create para inicializar el renderizado 2d y 3 d
     @Override
     public void create() {
-        
         System.out.println("Ejecutado create");
         inicializar2d();
         inicializar3d();
@@ -138,23 +127,18 @@ public class Canvas implements ApplicationListener{
         font = new BitmapFont();
         rend = new ShapeRenderer();
         
-        
     }
 
     @Override
     public void resize(int i, int i1) {
     }
     //renders 2d y 3d
-    
+    //render 2d Graficacion de puntos en 2d
     void render2d(){
-         //Limpiar con color de fondo.
+        //Limpiar con color de fondo.
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
-
         rend.begin(ShapeRenderer.ShapeType.Line); // Iniciar el ShapeRenderer para dibujar líneas
-
         rend.setColor(Color.WHITE);
         
         // Dibujar líneas horizontales
@@ -171,19 +155,13 @@ public class Canvas implements ApplicationListener{
         //rend.setColor(Color.RED);
         //rend.rectLine(120, 220, 300, 320, 5);
         rend.end();
-
-
         rend.end(); // Finalizar el dibujo de líneas horizontales y verticales
-
         rend.begin(ShapeRenderer.ShapeType.Line); // Iniciar el ShapeRenderer para dibujar las líneas que unen los puntos
-
         rend.setColor(Color.BLUE); // Color de la línea
-
         // Dibujar líneas que unen los puntos de cada figura
         for (int i = 0; i < listaFiguras.size(); i++) {
             Figura figura = listaFiguras.get(i);
             DefaultListModel<Punto> puntos = figura.listaPuntos;
-
             if (puntos.size() > 1) {
                 for (int j = 0; j < puntos.size() - 1; j++) {
                     Punto puntoActual = puntos.get(j);
@@ -192,7 +170,6 @@ public class Canvas implements ApplicationListener{
                     rend.line(puntoActual.Px * Figura.escala, puntoActual.Py * Figura.escala,
                             puntoSiguiente.Px * Figura.escala, puntoSiguiente.Py * Figura.escala);
                 }
-
                 // Unir el último punto con el primero para cerrar la figura
                 Punto primerPunto = puntos.get(0);
                 Punto ultimoPunto = puntos.get(puntos.size() - 1);
@@ -202,16 +179,12 @@ public class Canvas implements ApplicationListener{
         }
 
         rend.end(); // Finalizar el dibujo de las líneas que unen los puntos
-
         rend.begin(ShapeRenderer.ShapeType.Filled); // Iniciar el ShapeRenderer para dibujar los puntos
-
         rend.setColor(Color.RED); // Color de los puntos
-
         // Dibujar los puntos de cada figura
         for (int i = 0; i < listaFiguras.size(); i++) {
             Figura figura = listaFiguras.get(i);
             DefaultListModel<Punto> puntos = figura.listaPuntos;
-
             for (int j = 0; j < puntos.size(); j++) {
                 Punto punto = puntos.get(j);
                 rend.circle(punto.Px * Figura.escala, punto.Py * Figura.escala, 10);
@@ -219,7 +192,7 @@ public class Canvas implements ApplicationListener{
         }
         rend.end(); // Finalizar el dibujo de los puntos
     }
-    
+    //render 3d Movimiento de camara
     void render3d(){
      //Limpiar con color de fondo.       
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -261,8 +234,6 @@ public class Canvas implements ApplicationListener{
         batch3d.end();
     }
     
-    
-  
     @Override
     public void render() {
         if(v.jRadioButton1.isSelected()){
@@ -271,8 +242,8 @@ public class Canvas implements ApplicationListener{
             render3d();
         }
     }
-        //modelo de figuras primitivas
-public void crearModelo(final String tipo) {
+    //Creacion de modelo de figuras primitivas
+    public void crearModelo(final String tipo) {
     Gdx.app.postRunnable(new Runnable() {
         @Override
         public void run() {
@@ -311,7 +282,6 @@ public void crearModelo(final String tipo) {
     });
 }
 
-
     @Override
     public void pause() {
     }
@@ -325,7 +295,6 @@ public void crearModelo(final String tipo) {
         batch.dispose();
         font.dispose();
         rend.dispose();
-        
         m1.dispose();
     }
     
