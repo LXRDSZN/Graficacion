@@ -1296,11 +1296,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        java.awt.Color c = JColorChooser.showDialog(this, "elija color de la forma 3d", Color.yellow);
+        java.awt.Color color = JColorChooser.showDialog(this, "elija color de la forma 3d", java.awt.Color.RED);
         
-        jButton21.setBackground(c);
+        jButton21.setBackground(color);
         
-        com.badlogic.gdx.graphics.Color c2 = new Color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()) ;
+        com.badlogic.gdx.graphics.Color c2 = new Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()) ;
+        c.cambiarColorModelo(color);
+        
         
     }//GEN-LAST:event_jButton21ActionPerformed
 

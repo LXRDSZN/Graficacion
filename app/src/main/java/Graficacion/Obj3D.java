@@ -41,7 +41,7 @@ public class Obj3D implements ApplicationListener{
     @Override
     public void dispose() {
         
-    } 
+    }
 }
 
 //clase para el contructor que añadera una lista de figuras
@@ -65,4 +65,6 @@ public class Obj3D implements ApplicationListener{
     public String toString() {
         return getNombre(); 
     }
+
+
 }

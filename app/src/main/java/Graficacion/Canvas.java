@@ -252,25 +252,27 @@ public class Canvas implements ApplicationListener{
                 m1instance = null;
             }
 
+            com.badlogic.gdx.graphics.Color colorDefault = new com.badlogic.gdx.graphics.Color(1, 1, 1, 1); // Blanco
+
             switch (tipo) {
                 case "CUBO":
                     m1 = builder3d.createBox(5f, 5f, 5f, 
-                            new Material(ColorAttribute.createDiffuse(Color.GOLD)), 
+                            new Material(ColorAttribute.createDiffuse(colorDefault)), 
                             VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     break;
                 case "ESFERA":
                     m1 = builder3d.createSphere(5f, 5f, 5f, 32, 32,
-                            new Material(ColorAttribute.createDiffuse(Color.BLUE)),
+                            new Material(ColorAttribute.createDiffuse(colorDefault)),
                             VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     break;
                 case "CILINDRO":
                     m1 = builder3d.createCylinder(5f, 10f, 5f, 32,
-                            new Material(ColorAttribute.createDiffuse(Color.RED)),
+                            new Material(ColorAttribute.createDiffuse(colorDefault)),
                             VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     break;
                 case "CONO":
                     m1 = builder3d.createCone(5f, 10f, 5f, 32,
-                            new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+                            new Material(ColorAttribute.createDiffuse(colorDefault)),
                             VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     break;
                 default:
@@ -282,6 +284,28 @@ public class Canvas implements ApplicationListener{
     });
 }
 
+    
+    public void cambiarColorModelo(java.awt.Color awtColor) {
+    Gdx.app.postRunnable(new Runnable() {
+        @Override
+        public void run() {
+            com.badlogic.gdx.graphics.Color gdxColor = new com.badlogic.gdx.graphics.Color(
+                awtColor.getRed() / 255f, 
+                awtColor.getGreen() / 255f, 
+                awtColor.getBlue() / 255f, 
+                awtColor.getAlpha() / 255f
+            );
+
+            if (m1instance != null && m1instance.materials.size > 0) {
+                m1instance.materials.get(0).set(ColorAttribute.createDiffuse(gdxColor));
+            }
+        }
+    });
+}
+
+    
+    
+    
     @Override
     public void pause() {
     }
