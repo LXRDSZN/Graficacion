@@ -1301,6 +1301,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         {
             obj.listaFiguras3d.removeElement(figuraSeleccionada);
             c.eliminar();
+            
             jList3.updateUI();
         }
     }//GEN-LAST:event_jButton20ActionPerformed

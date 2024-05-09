@@ -116,6 +116,7 @@ public class Canvas implements ApplicationListener{
         
         caminput = new CameraInputController(cam);
         Gdx.input.setInputProcessor(caminput);
+        
     }
     //Mtodo Create para inicializar el renderizado 2d y 3 d
     @Override
@@ -247,11 +248,7 @@ public class Canvas implements ApplicationListener{
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                if (m1instance != null) {
-                    m1.dispose();  // Liberar el modelo anterior
-                    m1instance = null;
-                }
-
+          
                 com.badlogic.gdx.graphics.Color colorDefault = new com.badlogic.gdx.graphics.Color(1, 1, 1, 1); // Blanco
 
                 Model model;
@@ -288,10 +285,12 @@ public class Canvas implements ApplicationListener{
           Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
+             
                 if (m1instance != null) {
-                    m1instance.model.dispose();
-                    m1instance = null;
+                m1.dispose();
+                inicializar3d();       
                 }
+                
             }
         });
     }
