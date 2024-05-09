@@ -746,7 +746,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel17.setText("Tipo");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CUBO", "CILINDRO", "ESFERA", "CONO", "" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CUBO", "CILINDRO", "ESFERA", "CONO" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -1263,18 +1263,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
     String selectedItem = (String) jComboBox1.getSelectedItem();
-    try {
-        c.crearModelo(selectedItem);
-        System.out.println("Has seleccionado: " + selectedItem);
-    } catch (Exception e) {
-        System.out.println("Error al generar " + selectedItem + ": " + e.getMessage());
-    }
+    System.out.println("Has seleccionado: " + selectedItem);
     }//GEN-LAST:event_jComboBox1ActionPerformed
     
-    //agregar figura 3d
+    //agregar figura 3d 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        //Metodo canva3d para agregar nombres de figuras al jList3
-         obj.listaFiguras3d.addElement(new Figura3d(jTextField12.getText()));
+       try {
+        //valores de tamaño para sx sy sz
+        float sx = Float.parseFloat(jTextField13.getText()); 
+        float sy = Float.parseFloat(jTextField14.getText());
+        float sz = Float.parseFloat(jTextField15.getText());
+        //figura primitiva
+        String tipoFigura = (String) jComboBox1.getSelectedItem();
+
+        // Llamar al método en Canvas para crear y añadir el modelo 3D con las dimensiones especificadas
+        c.crearModelo(tipoFigura, sx, sy, sz);
+        //objeto para crear el nombre de la figura
+        obj.listaFiguras3d.addElement(new Figura3d(jTextField12.getText()));
+
+    } catch (NumberFormatException e) {
+       System.out.print("Por favor, introduce valores numéricos válidos para las dimensiones.");
+    }
+     
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1290,7 +1300,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
        if(figuraSeleccionada != null)
         {
             obj.listaFiguras3d.removeElement(figuraSeleccionada);
-
+            c.eliminar();
             jList3.updateUI();
         }
     }//GEN-LAST:event_jButton20ActionPerformed
@@ -1305,12 +1315,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton21ActionPerformed
-
-
-
-
-
-
 
     /**
      * @param args the command line arguments

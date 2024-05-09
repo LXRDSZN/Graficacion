@@ -108,9 +108,9 @@ public class Canvas implements ApplicationListener{
         
         builder3d = new ModelBuilder();
         
-        m1 = builder3d.createBox(5f, 5f, 5f, //Tamaño
-                                new Material(ColorAttribute.createDiffuse(Color.GOLD)), //Color
-                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        m1 = builder3d.createBox(0f, 0f, 0f, //Tamaño
+                              new Material(ColorAttribute.createDiffuse(Color.GOLD)), //Color
+                              VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         
         m1instance = new ModelInstance(m1);
         
@@ -242,48 +242,59 @@ public class Canvas implements ApplicationListener{
             render3d();
         }
     }
-    //Creacion de modelo de figuras primitivas
-    public void crearModelo(final String tipo) {
-    Gdx.app.postRunnable(new Runnable() {
-        @Override
-        public void run() {
-            if (m1instance != null) {
-                m1.dispose();  // Liberar el modelo anterior
-                m1instance = null;
+   // Método modificado para aceptar dimensiones como parámetros
+    public void crearModelo(final String tipo, final float sx, final float sy, final float sz) {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (m1instance != null) {
+                    m1.dispose();  // Liberar el modelo anterior
+                    m1instance = null;
+                }
+
+                com.badlogic.gdx.graphics.Color colorDefault = new com.badlogic.gdx.graphics.Color(1, 1, 1, 1); // Blanco
+
+                Model model;
+                switch (tipo) {
+                    case "CUBO":
+                        model = builder3d.createBox(sx, sy, sz,
+                                new Material(ColorAttribute.createDiffuse(colorDefault)),
+                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                        break;
+                    case "ESFERA":
+                        model = builder3d.createSphere(sx, sy, sz, 32, 32,
+                                new Material(ColorAttribute.createDiffuse(colorDefault)),
+                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                        break;
+                    case "CILINDRO":
+                        model = builder3d.createCylinder(sx, sy, sz, 32,
+                                new Material(ColorAttribute.createDiffuse(colorDefault)),
+                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                        break;
+                    case "CONO":
+                        model = builder3d.createCone(sx, sy, sz, 32,
+                                new Material(ColorAttribute.createDiffuse(colorDefault)),
+                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                        break;
+                    default:
+                        System.out.println("Tipo no reconocido: " + tipo);
+                        return;
+                }
+                m1instance = new ModelInstance(model);
             }
-
-            com.badlogic.gdx.graphics.Color colorDefault = new com.badlogic.gdx.graphics.Color(1, 1, 1, 1); // Blanco
-
-            switch (tipo) {
-                case "CUBO":
-                    m1 = builder3d.createBox(5f, 5f, 5f, 
-                            new Material(ColorAttribute.createDiffuse(colorDefault)), 
-                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                    break;
-                case "ESFERA":
-                    m1 = builder3d.createSphere(5f, 5f, 5f, 32, 32,
-                            new Material(ColorAttribute.createDiffuse(colorDefault)),
-                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                    break;
-                case "CILINDRO":
-                    m1 = builder3d.createCylinder(5f, 10f, 5f, 32,
-                            new Material(ColorAttribute.createDiffuse(colorDefault)),
-                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                    break;
-                case "CONO":
-                    m1 = builder3d.createCone(5f, 10f, 5f, 32,
-                            new Material(ColorAttribute.createDiffuse(colorDefault)),
-                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                    break;
-                default:
-                    System.out.println("Tipo no reconocido: " + tipo);
-                    return;
+        });
+    }
+    public void eliminar(){
+          Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (m1instance != null) {
+                    m1instance.model.dispose();
+                    m1instance = null;
+                }
             }
-            m1instance = new ModelInstance(m1);
-        }
-    });
-}
-
+        });
+    }
     
     public void cambiarColorModelo(java.awt.Color awtColor) {
     Gdx.app.postRunnable(new Runnable() {
@@ -301,7 +312,10 @@ public class Canvas implements ApplicationListener{
             }
         }
     });
-}
+
+
+ }
+
 
     
     

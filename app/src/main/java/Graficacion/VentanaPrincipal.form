@@ -1027,7 +1027,7 @@
                                       <Component id="jButton21" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="69" max="32767" attributes="0"/>
+                              <EmptySpace pref="51" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1162,12 +1162,11 @@
                     <Component class="javax.swing.JComboBox" name="jComboBox1">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="5">
+                          <StringArray count="4">
                             <StringItem index="0" value="CUBO"/>
                             <StringItem index="1" value="CILINDRO"/>
                             <StringItem index="2" value="ESFERA"/>
                             <StringItem index="3" value="CONO"/>
-                            <StringItem index="4" value=""/>
                           </StringArray>
                         </Property>
                       </Properties>
