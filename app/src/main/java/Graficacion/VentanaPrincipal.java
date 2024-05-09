@@ -1282,7 +1282,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         obj.listaFiguras3d.addElement(new Figura3d(jTextField12.getText()));
 
     } catch (NumberFormatException e) {
-       System.out.print("Por favor, introduce valores numéricos válidos para las dimensiones.");
+       System.out.print("Por favor, introduce valores numéricos válidos para las dimensiones");
     }
      
     }//GEN-LAST:event_jButton19ActionPerformed
