@@ -1297,12 +1297,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         // TODO add your handling code here:
-       if(figuraSeleccionada != null)
-        {
-            obj.listaFiguras3d.removeElement(figuraSeleccionada);
-            c.eliminar();
-            
-            jList3.updateUI();
+        int selectedIndex = jList3.getSelectedIndex(); // Obtiene el índice del elemento seleccionado en jList3
+        if (selectedIndex != -1) {
+            obj.listaFiguras3d.remove(selectedIndex); // Elimina el elemento de la lista en la interfaz de usuario
+            c.eliminar(selectedIndex); // Llama al método de eliminar pasando el índice
+            jList3.updateUI(); // Actualiza la interfaz de usuario
         }
     }//GEN-LAST:event_jButton20ActionPerformed
 

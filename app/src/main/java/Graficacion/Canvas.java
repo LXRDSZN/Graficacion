@@ -24,6 +24,8 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultListModel;
 
 /**
@@ -194,46 +196,41 @@ public class Canvas implements ApplicationListener{
         rend.end(); // Finalizar el dibujo de los puntos
     }
     //render 3d Movimiento de camara
-    void render3d(){
-     //Limpiar con color de fondo.       
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        
-        
-        //mover camara con botones de 3D
-        
-        //mover camara con respecto a y
-        if(v.jButton13.getModel().isPressed()){
-            cam.position.y -= 0.1;
-        }
-        if(v.jButton16.getModel().isPressed()){
-            cam.position.y +=0.1;
-        }
-        
-        //Mover camara con respecto a x
-        
-         if(v.jButton14.getModel().isPressed()){
-            cam.position.x -= 0.1;
-        }
-        if(v.jButton15.getModel().isPressed()){
-            cam.position.x +=0.1;
-        }
-        //Mover camara con respecto al frente y atras
-        
-        if(v.jButton17.getModel().isPressed()){
-            cam.position.z -= 0.1;
-        }
-        if(v.jButton18.getModel().isPressed()){
-            cam.position.z +=0.1;
-        }
-        
-        cam.update();
-        caminput.update();
-        
-        batch3d.begin(cam);
-        batch3d.render(m1instance,env);
-        batch3d.end();
+    void render3d() {
+    // Limpiar con color de fondo.       
+    Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+    // Movimiento de cámara con botones de 3D
+    if (v.jButton13.getModel().isPressed()) {
+        cam.position.y -= 0.1;
     }
+    if (v.jButton16.getModel().isPressed()) {
+        cam.position.y += 0.1;
+    }
+    if (v.jButton14.getModel().isPressed()) {
+        cam.position.x -= 0.1;
+    }
+    if (v.jButton15.getModel().isPressed()) {
+        cam.position.x += 0.1;
+    }
+    if (v.jButton17.getModel().isPressed()) {
+        cam.position.z -= 0.1;
+    }
+    if (v.jButton18.getModel().isPressed()) {
+        cam.position.z += 0.1;
+    }
+
+    cam.update();
+    caminput.update();
+
+    batch3d.begin(cam);
+    for (ModelInstance instance : modelInstances) {
+        batch3d.render(instance, env);
+    }
+    batch3d.end();
+}
+
     
     @Override
     public void render() {
@@ -244,55 +241,52 @@ public class Canvas implements ApplicationListener{
         }
     }
    // Método modificado para aceptar dimensiones como parámetros
-    public void crearModelo(final String tipo, final float sx, final float sy, final float sz) {
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-          
-                com.badlogic.gdx.graphics.Color colorDefault = new com.badlogic.gdx.graphics.Color(1, 1, 1, 1); // Blanco
+    List<ModelInstance> modelInstances = new ArrayList<>(); // Lista para mantener todas las instancias.
 
-                Model model;
-                switch (tipo) {
-                    case "CUBO":
-                        model = builder3d.createBox(sx, sy, sz,
-                                new Material(ColorAttribute.createDiffuse(colorDefault)),
-                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                        break;
-                    case "ESFERA":
-                        model = builder3d.createSphere(sx, sy, sz, 32, 32,
-                                new Material(ColorAttribute.createDiffuse(colorDefault)),
-                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                        break;
-                    case "CILINDRO":
-                        model = builder3d.createCylinder(sx, sy, sz, 32,
-                                new Material(ColorAttribute.createDiffuse(colorDefault)),
-                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                        break;
-                    case "CONO":
-                        model = builder3d.createCone(sx, sy, sz, 32,
-                                new Material(ColorAttribute.createDiffuse(colorDefault)),
-                                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                        break;
-                    default:
-                        System.out.println("Tipo no reconocido: " + tipo);
-                        return;
-                }
-                m1instance = new ModelInstance(model);
+public void crearModelo(final String tipo, final float sx, final float sy, final float sz) {
+    Gdx.app.postRunnable(new Runnable() {
+        @Override
+        public void run() {
+            Model model;
+            com.badlogic.gdx.graphics.Color colorDefault = new com.badlogic.gdx.graphics.Color(1, 1, 1, 1); // Blanco
+            switch (tipo) {
+                case "CUBO":
+                    model = builder3d.createBox(sx, sy, sz,
+                        new Material(ColorAttribute.createDiffuse(colorDefault)),
+                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    break;
+                case "ESFERA":
+                    model = builder3d.createSphere(sx, sy, sz, 32, 32,
+                        new Material(ColorAttribute.createDiffuse(colorDefault)),
+                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    break;
+                case "CILINDRO":
+                    model = builder3d.createCylinder(sx, sy, sz, 32,
+                        new Material(ColorAttribute.createDiffuse(colorDefault)),
+                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    break;
+                case "CONO":
+                    model = builder3d.createCone(sx, sy, sz, 32,
+                        new Material(ColorAttribute.createDiffuse(colorDefault)),
+                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    break;
+                default:
+                    System.out.println("Tipo no reconocido: " + tipo);
+                    return;
             }
-        });
-    }
-    public void eliminar(){
-          Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-             
-                if (m1instance != null) {
-                m1.dispose();
-                inicializar3d();       
-                }
-                
-            }
-        });
+            ModelInstance newInstance = new ModelInstance(model);
+            modelInstances.add(newInstance); // Añade la nueva instancia a la lista
+        }
+    });
+}
+
+   // En la clase que maneja el renderizado
+        public void eliminar(int index) {
+            if (index >= 0 && index < modelInstances.size()) {
+            ModelInstance instanceToRemove = modelInstances.get(index);
+            instanceToRemove.model.dispose(); // Libera los recursos del modelo
+            modelInstances.remove(index); // Remueve la instancia de la lista de modelos
+        }
     }
     
     public void cambiarColorModelo(java.awt.Color awtColor) {
