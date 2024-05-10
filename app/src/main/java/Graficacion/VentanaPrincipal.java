@@ -1296,7 +1296,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         obj.listaFiguras3d.addElement(new Figura3d(nombreFigura));
 
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Por favor, introduce valores numéricos válidos para las dimensiones.");
+         System.out.print("Por favor, introduce valores numéricos válidos para las dimensiones.");
     }
      
     }//GEN-LAST:event_jButton19ActionPerformed
@@ -1328,9 +1328,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // Actualizar la UI si es necesario
         jList3.updateUI(); 
 
-        JOptionPane.showMessageDialog(null, "Figura eliminada correctamente.");
+       System.out.print("Figura eliminada correctamente.");
     } else {
-        JOptionPane.showMessageDialog(null, "Por favor, selecciona una figura para eliminar.");
+        System.out.print("Por favor, selecciona una figura para eliminar.");
     }
     }//GEN-LAST:event_jButton20ActionPerformed
 
