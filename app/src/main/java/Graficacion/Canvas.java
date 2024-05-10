@@ -25,7 +25,9 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultListModel;
 
 /**
@@ -45,8 +47,10 @@ public class Canvas implements ApplicationListener{
     CameraInputController caminput;
     Model m1;
     ModelInstance m1instance;
-
-
+    
+      public Map<String, ModelInstance> getNameToModelMap() {
+        return nameToModelMap;
+    }
     //Metodo para la colocacion de puntos 
     public void setEspaciado(int nuevoEspaciado) {
         int antiguoEspaciado = this.espaciado;
@@ -224,7 +228,7 @@ public class Canvas implements ApplicationListener{
     cam.update();
     caminput.update();
 
-    batch3d.begin(cam);
+   batch3d.begin(cam);
     for (ModelInstance instance : modelInstances) {
         batch3d.render(instance, env);
     }
@@ -240,15 +244,18 @@ public class Canvas implements ApplicationListener{
             render3d();
         }
     }
-   // Método modificado para aceptar dimensiones como parámetros
-    List<ModelInstance> modelInstances = new ArrayList<>(); // Lista para mantener todas las instancias.
+  // Lista para mantener todas las instancias y un mapa para asociar nombres a instancias.}
+    // Declara el mapa a nivel de clase
+    public Map<String, ModelInstance> nameToModelMap = new HashMap<>();
+ 
+    List<ModelInstance> modelInstances = new ArrayList<>();
 
-public void crearModelo(final String tipo, final float sx, final float sy, final float sz) {
+public void crearModelo(final String nombre, final String tipo, final float sx, final float sy, final float sz) {
     Gdx.app.postRunnable(new Runnable() {
         @Override
         public void run() {
-            Model model;
-            com.badlogic.gdx.graphics.Color colorDefault = new com.badlogic.gdx.graphics.Color(1, 1, 1, 1); // Blanco
+            Model model = null;
+            Color colorDefault = new Color(1, 1, 1, 1); // Blanco
             switch (tipo) {
                 case "CUBO":
                     model = builder3d.createBox(sx, sy, sz,
@@ -274,21 +281,29 @@ public void crearModelo(final String tipo, final float sx, final float sy, final
                     System.out.println("Tipo no reconocido: " + tipo);
                     return;
             }
-            ModelInstance newInstance = new ModelInstance(model);
-            modelInstances.add(newInstance); // Añade la nueva instancia a la lista
+            if (model != null) {
+                ModelInstance newInstance = new ModelInstance(model);
+                modelInstances.add(newInstance); // Añade la nueva instancia a la lista
+                nameToModelMap.put(nombre, newInstance); // Asocia el nombre con la instancia del modelo
+            }
         }
     });
 }
-
-   // En la clase que maneja el renderizado
-        public void eliminar(int index) {
-            if (index >= 0 && index < modelInstances.size()) {
-            ModelInstance instanceToRemove = modelInstances.get(index);
-            instanceToRemove.model.dispose(); // Libera los recursos del modelo
-            modelInstances.remove(index); // Remueve la instancia de la lista de modelos
+public void eliminarModelo(String nombreFigura) {
+    Gdx.app.postRunnable(new Runnable() {
+        @Override
+        public void run() {
+            if (nameToModelMap.containsKey(nombreFigura)) {
+                ModelInstance instance = nameToModelMap.get(nombreFigura);
+                if (instance != null) {
+                    instance.model.dispose(); // Asegúrate de llamar a dispose en el hilo de renderizado
+                    modelInstances.remove(instance); // Elimina la instancia del modelo de la lista
+                    nameToModelMap.remove(nombreFigura); // Elimina la entrada del mapa
+                }
+            }
         }
-    }
-    
+    });
+}
     public void cambiarColorModelo(java.awt.Color awtColor) {
     Gdx.app.postRunnable(new Runnable() {
         @Override

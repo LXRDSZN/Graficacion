@@ -60,6 +60,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jList1.setModel(c.listaFiguras);
         jList2.setModel(c.listaFiguras.get(0).listaPuntos);
         jList3.setModel(obj.listaFiguras3d); 
+        
         //Metodo para mostrar los puntos en una figura seleccionada
         jList1.addListSelectionListener(new ListSelectionListener(){
             @Override
@@ -1268,21 +1269,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     //agregar figura 3d 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-       try {
-        //valores de tamaño para sx sy sz
+      try {
+        // Captura los valores de tamaño desde la interfaz de usuario
         float sx = Float.parseFloat(jTextField13.getText()); 
         float sy = Float.parseFloat(jTextField14.getText());
         float sz = Float.parseFloat(jTextField15.getText());
-        //figura primitiva
+
+        // Captura el tipo de figura seleccionada y el nombre de la figura
         String tipoFigura = (String) jComboBox1.getSelectedItem();
+        String nombreFigura = jTextField12.getText();
+
+        // Verifica que el nombre no esté vacío y no exista ya en el mapa
+        if (nombreFigura.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, introduce un nombre para la figura.");
+            return;
+        }
+        if (c.nameToModelMap.containsKey(nombreFigura)) {
+            JOptionPane.showMessageDialog(null, "Una figura con este nombre ya existe. Por favor, elige otro nombre.");
+            return;
+        }
 
         // Llamar al método en Canvas para crear y añadir el modelo 3D con las dimensiones especificadas
-        c.crearModelo(tipoFigura, sx, sy, sz);
-        //objeto para crear el nombre de la figura
-        obj.listaFiguras3d.addElement(new Figura3d(jTextField12.getText()));
+        c.crearModelo(nombreFigura, tipoFigura, sx, sy, sz);
+
+        // Añadir el nombre de la figura a la lista para la interfaz de usuario
+        obj.listaFiguras3d.addElement(new Figura3d(nombreFigura));
 
     } catch (NumberFormatException e) {
-       System.out.print("Por favor, introduce valores numéricos válidos para las dimensiones");
+        JOptionPane.showMessageDialog(null, "Por favor, introduce valores numéricos válidos para las dimensiones.");
     }
      
     }//GEN-LAST:event_jButton19ActionPerformed
@@ -1296,13 +1310,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField12ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
-        int selectedIndex = jList3.getSelectedIndex(); // Obtiene el índice del elemento seleccionado en jList3
-        if (selectedIndex != -1) {
-            obj.listaFiguras3d.remove(selectedIndex); // Elimina el elemento de la lista en la interfaz de usuario
-            c.eliminar(selectedIndex); // Llama al método de eliminar pasando el índice
-            jList3.updateUI(); // Actualiza la interfaz de usuario
+        // Obtener el índice de la figura seleccionada en el JList
+    int selectedIndex = jList3.getSelectedIndex();
+    if (selectedIndex != -1) { // Asegúrate de que haya una selección
+        // Obtener el nombre de la figura seleccionada para posibles operaciones adicionales
+        Figura3d figuraSeleccionada = obj.listaFiguras3d.getElementAt(selectedIndex);
+        String nombreFigura = figuraSeleccionada.getNombre();
+
+        // Eliminar la figura del modelo de lista
+        obj.listaFiguras3d.removeElementAt(selectedIndex);
+
+        // eliminar cualquier recurso asociado en tu clase Canvas
+        if (c != null) {
+            c.eliminarModelo(nombreFigura);
         }
+
+        // Actualizar la UI si es necesario
+        jList3.updateUI(); 
+
+        JOptionPane.showMessageDialog(null, "Figura eliminada correctamente.");
+    } else {
+        JOptionPane.showMessageDialog(null, "Por favor, selecciona una figura para eliminar.");
+    }
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
