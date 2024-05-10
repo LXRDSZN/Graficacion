@@ -1281,11 +1281,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         // Verifica que el nombre no esté vacío y no exista ya en el mapa
         if (nombreFigura.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor, introduce un nombre para la figura.");
+             System.out.print("Por favor, introduce un nombre para la figura.");
             return;
         }
         if (c.nameToModelMap.containsKey(nombreFigura)) {
-            JOptionPane.showMessageDialog(null, "Una figura con este nombre ya existe. Por favor, elige otro nombre.");
+            System.out.print("Una figura con este nombre ya existe. Por favor, elige otro nombre.");
             return;
         }
 

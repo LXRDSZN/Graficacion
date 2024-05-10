@@ -247,9 +247,9 @@ public class Canvas implements ApplicationListener{
   // Lista para mantener todas las instancias y un mapa para asociar nombres a instancias.}
     // Declara el mapa a nivel de clase
     public Map<String, ModelInstance> nameToModelMap = new HashMap<>();
- 
+    //Array para guardar el modelo
     List<ModelInstance> modelInstances = new ArrayList<>();
-
+//Metodo para crear una figura primitiva
 public void crearModelo(final String nombre, final String tipo, final float sx, final float sy, final float sz) {
     Gdx.app.postRunnable(new Runnable() {
         @Override
@@ -283,27 +283,29 @@ public void crearModelo(final String nombre, final String tipo, final float sx, 
             }
             if (model != null) {
                 ModelInstance newInstance = new ModelInstance(model);
-                modelInstances.add(newInstance); // Añade la nueva instancia a la lista
-                nameToModelMap.put(nombre, newInstance); // Asocia el nombre con la instancia del modelo
+                modelInstances.add(newInstance); 
+                nameToModelMap.put(nombre, newInstance); 
             }
         }
     });
 }
-public void eliminarModelo(String nombreFigura) {
-    Gdx.app.postRunnable(new Runnable() {
-        @Override
-        public void run() {
-            if (nameToModelMap.containsKey(nombreFigura)) {
-                ModelInstance instance = nameToModelMap.get(nombreFigura);
-                if (instance != null) {
-                    instance.model.dispose(); // Asegúrate de llamar a dispose en el hilo de renderizado
-                    modelInstances.remove(instance); // Elimina la instancia del modelo de la lista
-                    nameToModelMap.remove(nombreFigura); // Elimina la entrada del mapa
+    //metodo para borrrar el modelo de una figura primitiva de una lista
+    public void eliminarModelo(String nombreFigura) {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (nameToModelMap.containsKey(nombreFigura)) {
+                    ModelInstance instance = nameToModelMap.get(nombreFigura);
+                    if (instance != null) {
+                        instance.model.dispose();
+                        modelInstances.remove(instance); 
+                        nameToModelMap.remove(nombreFigura); 
+                    }
                 }
             }
-        }
-    });
-}
+        });
+    }
+    
     public void cambiarColorModelo(java.awt.Color awtColor) {
     Gdx.app.postRunnable(new Runnable() {
         @Override
