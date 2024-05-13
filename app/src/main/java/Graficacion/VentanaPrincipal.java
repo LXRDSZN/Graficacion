@@ -804,7 +804,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton21)))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1278,14 +1278,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // Captura el tipo de figura seleccionada y el nombre de la figura
         String tipoFigura = (String) jComboBox1.getSelectedItem();
         String nombreFigura = jTextField12.getText();
-
+        
         // Verifica que el nombre no esté vacío y no exista ya en el mapa
         if (nombreFigura.isEmpty()) {
-             System.out.print("Por favor, introduce un nombre para la figura.");
+             System.out.print("Por favor, introduce un nombre para la figura.\n");
             return;
         }
         if (c.nameToModelMap.containsKey(nombreFigura)) {
-            System.out.print("Una figura con este nombre ya existe. Por favor, elige otro nombre.");
+            System.out.print("Una figura con este nombre ya existe. Por favor, elige otro nombre.\n");
             return;
         }
 
@@ -1296,7 +1296,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         obj.listaFiguras3d.addElement(new Figura3d(nombreFigura));
 
     } catch (NumberFormatException e) {
-         System.out.print("Por favor, introduce valores numéricos válidos para las dimensiones.");
+         System.out.print("Por favor, introduce valores numéricos válidos para las dimensiones.\n");
     }
      
     }//GEN-LAST:event_jButton19ActionPerformed
@@ -1328,20 +1328,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // Actualizar la UI si es necesario
         jList3.updateUI(); 
 
-       System.out.print("Figura eliminada correctamente.");
+       System.out.print("Figura eliminada correctamente.\n");
     } else {
-        System.out.print("Por favor, selecciona una figura para eliminar.");
+        System.out.print("Por favor, selecciona una figura para eliminar.\n");
     }
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        java.awt.Color color = JColorChooser.showDialog(this, "elija color de la forma 3d", java.awt.Color.RED);
-        
-        jButton21.setBackground(color);
-        
-        com.badlogic.gdx.graphics.Color c2 = new Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()) ;
-        c.cambiarColorModelo(color);
-        
+    java.awt.Color awtColor = JColorChooser.showDialog(this, "Elija el color de la forma 3D", java.awt.Color.RED);
+    jButton21.setBackground(awtColor);
+    com.badlogic.gdx.graphics.Color gdxColor = new Color(awtColor.getRed()/255f, awtColor.getGreen()/255f, awtColor.getBlue()/255f, awtColor.getAlpha()/255f);
+    c.setSelectedColor(gdxColor); 
         
     }//GEN-LAST:event_jButton21ActionPerformed
 
@@ -1407,7 +1404,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
+    public javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

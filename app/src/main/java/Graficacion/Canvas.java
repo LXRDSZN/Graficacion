@@ -255,27 +255,18 @@ public void crearModelo(final String nombre, final String tipo, final float sx, 
         @Override
         public void run() {
             Model model = null;
-            Color colorDefault = new Color(1, 1, 1, 1); // Blanco
             switch (tipo) {
                 case "CUBO":
-                    model = builder3d.createBox(sx, sy, sz,
-                        new Material(ColorAttribute.createDiffuse(colorDefault)),
-                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    model = builder3d.createBox(sx, sy, sz, new Material(ColorAttribute.createDiffuse(selectedColor)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     break;
                 case "ESFERA":
-                    model = builder3d.createSphere(sx, sy, sz, 32, 32,
-                        new Material(ColorAttribute.createDiffuse(colorDefault)),
-                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    model = builder3d.createSphere(sx, sy, sz, 32, 32, new Material(ColorAttribute.createDiffuse(selectedColor)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     break;
                 case "CILINDRO":
-                    model = builder3d.createCylinder(sx, sy, sz, 32,
-                        new Material(ColorAttribute.createDiffuse(colorDefault)),
-                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    model = builder3d.createCylinder(sx, sy, sz, 32, new Material(ColorAttribute.createDiffuse(selectedColor)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     break;
                 case "CONO":
-                    model = builder3d.createCone(sx, sy, sz, 32,
-                        new Material(ColorAttribute.createDiffuse(colorDefault)),
-                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                    model = builder3d.createCone(sx, sy, sz, 32, new Material(ColorAttribute.createDiffuse(selectedColor)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     break;
                 default:
                     System.out.println("Tipo no reconocido: " + tipo);
@@ -289,6 +280,7 @@ public void crearModelo(final String nombre, final String tipo, final float sx, 
         }
     });
 }
+
     //metodo para borrrar el modelo de una figura primitiva de una lista
     public void eliminarModelo(String nombreFigura) {
         Gdx.app.postRunnable(new Runnable() {
@@ -306,25 +298,13 @@ public void crearModelo(final String nombre, final String tipo, final float sx, 
         });
     }
     
-    public void cambiarColorModelo(java.awt.Color awtColor) {
-    Gdx.app.postRunnable(new Runnable() {
-        @Override
-        public void run() {
-            com.badlogic.gdx.graphics.Color gdxColor = new com.badlogic.gdx.graphics.Color(
-                awtColor.getRed() / 255f, 
-                awtColor.getGreen() / 255f, 
-                awtColor.getBlue() / 255f, 
-                awtColor.getAlpha() / 255f
-            );
+  
+    // En metodo para color
+private Color selectedColor = new Color(1, 1, 1, 1); 
+public void setSelectedColor(Color color) {
+    this.selectedColor = color;
+}
 
-            if (m1instance != null && m1instance.materials.size > 0) {
-                m1instance.materials.get(0).set(ColorAttribute.createDiffuse(gdxColor));
-            }
-        }
-    });
-
-
- }
 
 
     
@@ -344,6 +324,10 @@ public void crearModelo(final String nombre, final String tipo, final float sx, 
         font.dispose();
         rend.dispose();
         m1.dispose();
+    }
+
+    void cambiarColorModelo() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
