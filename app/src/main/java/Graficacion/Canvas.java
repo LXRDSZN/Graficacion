@@ -47,10 +47,45 @@ public class Canvas implements ApplicationListener{
     CameraInputController caminput;
     Model m1;
     ModelInstance m1instance;
+    //Metodo para fotogramas
+      public static final int MAX_FOTOGRAMAS=3600;
+      private int fotogramas_actual=0;
+      public static boolean reproduciendo = false;
+    /**
+     * @return the fotogramas_actual
+     */
+    public int getFotogramas_actual() {
+        return fotogramas_actual;
+    }
+
+    /**
+     * @param fotogramas_actual the fotogramas_actual to set
+     */
+    public void setFotogramas_actual(int fotogramas_actual) {
+        this.fotogramas_actual = fotogramas_actual;
+        
+        ActualizarInterface();
+    }
     
+    public void ActualizarInterface(){
+        int minutos = (int) (fotogramas_actual/3600);
+        int segundos = (int )((fotogramas_actual % 3600)/60);
+        v.jLabel20.setText(minutos+":"+segundos+":"+fotogramas_actual+"/"+MAX_FOTOGRAMAS);
+        v.jSlider1.setValue(getFotogramas_actual());
+    }
       public Map<String, ModelInstance> getNameToModelMap() {
         return nameToModelMap;
     }
+      //Metodos para los fotogramas avanzar y anterior
+      
+    public void Fotogramasiguiente(){
+         setFotogramas_actual(getFotogramas_actual()+1);
+    }
+    
+    public void Fotogramaanmterior(){
+           setFotogramas_actual(getFotogramas_actual()-1);
+    }
+      
     //Metodo para la colocacion de puntos 
     public void setEspaciado(int nuevoEspaciado) {
         int antiguoEspaciado = this.espaciado;
@@ -139,9 +174,16 @@ public class Canvas implements ApplicationListener{
     @Override
     public void resize(int i, int i1) {
     }
+
+    
     //renders 2d y 3d
     //render 2d Graficacion de puntos en 2d
     void render2d(){
+        //reproducier video 
+        
+        if (reproduciendo){
+            Fotogramasiguiente();
+        }
         //Limpiar con color de fondo.
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
