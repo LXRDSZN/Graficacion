@@ -16,40 +16,35 @@ public class Figura {
     private String Nombre;
 
     public DefaultListModel<Punto> listaPuntos;
+     public DefaultListModel<Keyframe> listakeyframes;
     
     public static int escala = 20;
 
-    /**
-     * @return the Nombre
-     */
     public String getNombre() {
         return Nombre;
     }
 
-    /**
-     * @param Nombre the Nombre to set
-     */
+    
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
-
-
-    public void tranformar(Matriz3x3 mt){
-
-        for (int i = 0; i < listaPuntos.size(); i++) {
-            listaPuntos.get(i).tranformar(mt);
-        }
-
-
+    public void AgregarKeyframe(Keyframe k){
+        listakeyframes.addElement(k);
     }
 
+    public Keyframe getKeyframeinicial(){
+        return listakeyframes.get(0);
+    }
 
 
     public Figura(String Nombre) {
         this.Nombre = Nombre;
         
-        listaPuntos = new DefaultListModel<>();
-
+        //k.listaPuntos = new DefaultListModel<>();
+        listakeyframes = new DefaultListModel<>();
+        float []  par = {0,0};
+        Keyframe inical = new  Keyframe(0, Keyframe.tiposTransf.NINGUNO, this, par);
+        listakeyframes.addElement(inical);
     }
 
     @Override
@@ -57,10 +52,15 @@ public class Figura {
         return Nombre;
     }
     
+    public void tranformar(Matriz3x3 mt){
+        for (int i = 0; i < getKeyframeinicial().listaPuntos.size(); i++) {
+            getKeyframeinicial().listaPuntos.get(i).tranformar(mt);
+        }
+    }
     public void dibujar(ShapeRenderer rend)
     {
-        for (int i = 0; i < listaPuntos.size(); i++) {
-            listaPuntos.get(i).dibujar(rend);
+        for (int i = 0; i < getKeyframeinicial().listaPuntos.size(); i++) {
+            getKeyframeinicial().listaPuntos.get(i).dibujar(rend);
         }
     }
     

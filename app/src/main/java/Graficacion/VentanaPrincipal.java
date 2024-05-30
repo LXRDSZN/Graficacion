@@ -4,6 +4,7 @@
  */
 package Graficacion;
 
+import Graficacion.Keyframe.tiposTransf;
 import com.badlogic.gdx.backends.lwjgl.LwjglAWTCanvas;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
@@ -19,6 +20,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.prefs.Preferences;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -58,7 +60,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         LwjglAWTCanvas panelCanvas = new LwjglAWTCanvas(c, config);
         jPanel1.add(panelCanvas.getCanvas());
         jList1.setModel(c.listaFiguras);
-        jList2.setModel(c.listaFiguras.get(0).listaPuntos);
+        jList2.setModel(c.listaFiguras.get(0).getKeyframeinicial().listaPuntos);
         jList3.setModel(obj.listaFiguras3d); 
         
         //Metodo para mostrar los puntos en una figura seleccionada
@@ -69,11 +71,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
                 if (figuraSeleccionada != null) {
                     jTextField1.setText(figuraSeleccionada.getNombre());
-
+                    jList4.setModel(figuraSeleccionada.listakeyframes);
                     // Crear un nuevo modelo de lista para mostrar solo los puntos de la figura seleccionada
                     DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
-                    for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
-                        puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+                    for (int i = 0; i < figuraSeleccionada.getKeyframeinicial().listaPuntos.size(); i++) {
+                        puntosModel.addElement(figuraSeleccionada.getKeyframeinicial().listaPuntos.get(i));
                     }
                     jList2.setModel(puntosModel); // Mostrar los puntos de la nueva figura en JList2
                 } else {
@@ -120,8 +122,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
                     // Crear un nuevo modelo de lista para mostrar solo los puntos de la figura seleccionada
                     DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
-                    for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
-                        puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+                    for (int i = 0; i < figuraSeleccionada.getKeyframeinicial().listaPuntos.size(); i++) {
+                        puntosModel.addElement(figuraSeleccionada.getKeyframeinicial().listaPuntos.get(i));
                     }
                     jList2.setModel(puntosModel); // Mostrar los puntos de la nueva figura en JList2
                 } else {
@@ -230,6 +232,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jTextField17 = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         jList4 = new javax.swing.JList<>();
+        jButton25 = new javax.swing.JButton();
+        jButton26 = new javax.swing.JButton();
+        jButton27 = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
         jButton24 = new javax.swing.JButton();
@@ -942,18 +947,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel21.setText("tRANSFORMACION");
         jLabel21.setToolTipText("");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new DefaultComboBoxModel<tiposTransf>(Keyframe.tiposTransf.values()));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jLabel22.setText("Parametro 1");
 
         jLabel23.setText("Parametro 2");
 
-        jList4.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane4.setViewportView(jList4);
+
+        jButton25.setText("Agregar");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
+
+        jButton26.setText("Editar");
+
+        jButton27.setText("Eliminar");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -965,14 +981,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(jScrollPane4)
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel23))
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField16)
-                            .addComponent(jTextField17))
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel21)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel23))
+                                .addGap(27, 27, 27)
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField16)
+                                    .addComponent(jTextField17)))
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addComponent(jButton25)
+                                .addGap(30, 30, 30)
+                                .addComponent(jButton26)
+                                .addGap(27, 27, 27)
+                                .addComponent(jButton27)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -991,9 +1015,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel23)
                     .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton25)
+                    .addComponent(jButton26)
+                    .addComponent(jButton27))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         jButton22.setText("Iniciar");
@@ -1141,11 +1170,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             int px = Ints.tryParse(jTextField2.getText()).intValue();
             int py = Ints.tryParse(jTextField3.getText()).intValue();
 
-            figuraSeleccionada.listaPuntos.addElement(new Punto(px, py));
+            figuraSeleccionada.getKeyframeinicial().listaPuntos.addElement(new Punto(px, py));
 
             DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
-            for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
-                puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+            for (int i = 0; i < figuraSeleccionada.getKeyframeinicial().listaPuntos.size(); i++) {
+                puntosModel.addElement(figuraSeleccionada.getKeyframeinicial().listaPuntos.get(i));
             }
             jList2.setModel(puntosModel); // Actualizar el modelo de lista con los nuevos puntos
             jList2.updateUI(); // Forzar la actualización visual inmediata del JList2
@@ -1183,8 +1212,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             puntoseleccionado.Py = py;
 
             DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
-            for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
-                puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+            for (int i = 0; i < figuraSeleccionada.getKeyframeinicial().listaPuntos.size(); i++) {
+                puntosModel.addElement(figuraSeleccionada.getKeyframeinicial().listaPuntos.get(i));
             }
             jList2.setModel(puntosModel); // Actualizar el modelo de lista con los puntos editados
             jList2.updateUI(); // Forzar la actualización visual inmediata del JList2
@@ -1194,11 +1223,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     //boton para borrar puntos 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         if (figuraSeleccionada != null && puntoseleccionado != null) {
-            figuraSeleccionada.listaPuntos.removeElement(puntoseleccionado);
+            figuraSeleccionada.getKeyframeinicial().listaPuntos.removeElement(puntoseleccionado);
 
             DefaultListModel<Punto> puntosModel = new DefaultListModel<>();
-            for (int i = 0; i < figuraSeleccionada.listaPuntos.size(); i++) {
-                puntosModel.addElement(figuraSeleccionada.listaPuntos.get(i));
+            for (int i = 0; i < figuraSeleccionada.getKeyframeinicial().listaPuntos.size(); i++) {
+                puntosModel.addElement(figuraSeleccionada.getKeyframeinicial().listaPuntos.get(i));
             }
             jList2.setModel(puntosModel); // Actualizar el modelo de lista sin el punto eliminado
             jList2.updateUI(); // Forzar la actualización visual inmediata del JList2
@@ -1254,8 +1283,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     for (int i = 0; i < c.listaFiguras.size(); i++) {
         Figura f = c.listaFiguras.get(i);
         s.append(f.getNombre());
-        for (int j = 0; j < f.listaPuntos.size(); j++) {
-            Punto p = f.listaPuntos.get(j);
+        for (int j = 0; j < f.getKeyframeinicial().listaPuntos.size(); j++) {
+            Punto p = f.getKeyframeinicial().listaPuntos.get(j);
             s.append(",").append(p.Px).append(",").append(p.Py);
         }
         s.append("\n");
@@ -1308,7 +1337,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     float y = Float.parseFloat(tokens[i+1]);
                     
                     Punto p = new Punto(x, y);
-                    f.listaPuntos.addElement(p);
+                    f.getKeyframeinicial().listaPuntos.addElement(p);
                 } catch (NumberFormatException nfe) {
                     System.err.println("Error al convertir a número: " + nfe.getMessage());
                 }
@@ -1470,6 +1499,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_jButton22ActionPerformed
 
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        float []  par = new float[2];
+        
+        par[0] = Floats.tryParse(jTextField16.getText());
+        par[1] = Floats.tryParse(jTextField17.getText());
+        
+        Keyframe.tiposTransf trans  = (Keyframe.tiposTransf) jComboBox2.getSelectedItem();
+        Keyframe k = new  Keyframe(c.getFotogramas_actual(),trans, figuraSeleccionada, par);
+        figuraSeleccionada.listakeyframes.addElement(k);
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1528,6 +1572,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
+    private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1536,7 +1583,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     public javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<Keyframe.tiposTransf> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1563,7 +1610,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JList<Figura> jList1;
     private javax.swing.JList<Punto> jList2;
     public javax.swing.JList<Figura3d> jList3;
-    private javax.swing.JList<String> jList4;
+    private javax.swing.JList<Keyframe> jList4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

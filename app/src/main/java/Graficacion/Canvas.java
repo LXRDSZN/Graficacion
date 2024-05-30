@@ -99,7 +99,7 @@ public class Canvas implements ApplicationListener{
             public void run() {
                 // Recalcular las coordenadas de los puntos existentes
                 for (int i = 0; i < listaFiguras.size(); i++) {
-                    DefaultListModel<Punto> puntos = listaFiguras.get(i).listaPuntos;
+                    DefaultListModel<Punto> puntos = listaFiguras.get(i).getKeyframeinicial().listaPuntos;
                     for (int j = 0; j < puntos.size(); j++) {
                         Punto punto = puntos.get(j);
                         punto.Px = (int) (punto.Px * factorEscala);
@@ -117,7 +117,6 @@ public class Canvas implements ApplicationListener{
     public Canvas(VentanaPrincipal Ventana) {
         this.v = Ventana;
         listaFiguras = new DefaultListModel<>();
-        
         listaFiguras.addElement(new Figura(""));
     }
         private int espaciado = 20; 
@@ -210,7 +209,7 @@ public class Canvas implements ApplicationListener{
         // Dibujar líneas que unen los puntos de cada figura
         for (int i = 0; i < listaFiguras.size(); i++) {
             Figura figura = listaFiguras.get(i);
-            DefaultListModel<Punto> puntos = figura.listaPuntos;
+            DefaultListModel<Punto> puntos = figura.getKeyframeinicial().listaPuntos;
             if (puntos.size() > 1) {
                 for (int j = 0; j < puntos.size() - 1; j++) {
                     Punto puntoActual = puntos.get(j);
@@ -233,7 +232,7 @@ public class Canvas implements ApplicationListener{
         // Dibujar los puntos de cada figura
         for (int i = 0; i < listaFiguras.size(); i++) {
             Figura figura = listaFiguras.get(i);
-            DefaultListModel<Punto> puntos = figura.listaPuntos;
+            DefaultListModel<Punto> puntos = figura.getKeyframeinicial().listaPuntos;
             for (int j = 0; j < puntos.size(); j++) {
                 Punto punto = puntos.get(j);
                 rend.circle(punto.Px * Figura.escala, punto.Py * Figura.escala, 10);
