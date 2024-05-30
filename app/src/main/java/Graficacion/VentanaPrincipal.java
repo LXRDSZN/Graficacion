@@ -29,6 +29,8 @@ import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -40,6 +42,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public Obj3D obj;
     static Figura figuraSeleccionada = null;
     Punto puntoseleccionado = null;
+    Keyframe keyframeseleccionado = null;
     private Component frame;
     private Preferences prefs = Preferences.userNodeForPackage(VentanaPrincipal.class);
     private JFileChooser JFCSave = new JFileChooser();
@@ -131,6 +134,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     jList2.setModel(new DefaultListModel<>()); // Limpiar la JList2 si no hay figura seleccionada
                 }
             }
+        });
+        //add listener puntos para keyframes 
+        
+            jList4.addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(figuraSeleccionada != null)
+                {
+                    keyframeseleccionado = jList4.getSelectedValue();
+
+                    if(keyframeseleccionado != null)
+                    {
+                        c.setFotogramas_actual(keyframeseleccionado.numerodefotogramas);
+                        jComboBox2.setSelectedItem(keyframeseleccionado.transformacion);
+                        jTextField16.setText(""+keyframeseleccionado.param[0]);
+                        jTextField17.setText(""+keyframeseleccionado.param[1]);
+
+                    }
+                    else
+                    {
+                        jComboBox2.setSelectedIndex(0);
+                        jTextField16.setText("");
+                        jTextField17.setText("");
+
+                    }
+                    jList2.updateUI();
+                }
+            }
+        });
+        jSlider1.addChangeListener(new ChangeListener(){
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                if(jSlider1.getValueIsAdjusting()){
+                    c.setFotogramas_actual(jSlider1.getValue());
+                }
+            }
+            
         });
     }
     /**
@@ -956,7 +996,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel22.setText("Parametro 1");
 
+        jTextField16.setText("0");
+
         jLabel23.setText("Parametro 2");
+
+        jTextField17.setText("0");
 
         jScrollPane4.setViewportView(jList4);
 
@@ -968,8 +1012,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         jButton26.setText("Editar");
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
 
         jButton27.setText("Eliminar");
+        jButton27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton27ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -1513,6 +1567,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+       if(figuraSeleccionada != null){
+           if(jList4.getSelectedIndex()>0){
+                if(keyframeseleccionado != null){
+                    int frame  = c.fotogramas_actual;
+                    float []  par = {0,0};
+                    par[0] = Floats.tryParse(jTextField16.getText());
+                    par[1] = Floats.tryParse(jTextField17.getText());
+                    keyframeseleccionado.numerodefotogramas = frame;
+                    Keyframe.tiposTransf trans  = (Keyframe.tiposTransf) jComboBox2.getSelectedItem();
+                    keyframeseleccionado.transformacion = trans;
+                    keyframeseleccionado.param = par;
+                
+                    jList4.updateUI();
+                }else{
+                    JOptionPane.showMessageDialog(this, "Error no se puede editar el keyframe");
+                }
+           }
+           
+        }
+    }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+      if(figuraSeleccionada  != null && keyframeseleccionado != null){
+          try {
+            figuraSeleccionada.EliminarKeyrame(keyframeseleccionado);
+          } catch (Exception e) {
+              JOptionPane.showMessageDialog(this, e.getMessage());
+          }
+          jList4.updateUI();
+      }
+    }//GEN-LAST:event_jButton27ActionPerformed
 
     /**
      * @param args the command line arguments

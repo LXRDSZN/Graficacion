@@ -49,7 +49,7 @@ public class Canvas implements ApplicationListener{
     ModelInstance m1instance;
     //Metodo para fotogramas
       public static final int MAX_FOTOGRAMAS=3600;
-      private int fotogramas_actual=0;
+      public int fotogramas_actual=0;
       public static boolean reproduciendo = false;
     /**
      * @return the fotogramas_actual

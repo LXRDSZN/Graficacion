@@ -6,6 +6,7 @@ package Graficacion;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import javax.swing.DefaultListModel;
+import org.w3c.dom.ls.LSInput;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Figura {
         return Nombre;
     }
 
+  
     
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
@@ -31,7 +33,14 @@ public class Figura {
     public void AgregarKeyframe(Keyframe k){
         listakeyframes.addElement(k);
     }
-
+    public void EliminarKeyrame(Keyframe k) throws IllegalArgumentException{
+        int idx = listakeyframes.indexOf(k);
+        if(idx >0){
+            listakeyframes.removeElement(k);
+        }else{
+            throw new  IllegalArgumentException("Error No se puede eliminar el keyframe");
+        }
+    }
     public Keyframe getKeyframeinicial(){
         return listakeyframes.get(0);
     }
