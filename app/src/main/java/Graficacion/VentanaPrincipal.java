@@ -1554,14 +1554,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-        float []  par = new float[2];
         
-        par[0] = Floats.tryParse(jTextField16.getText());
-        par[1] = Floats.tryParse(jTextField17.getText());
+        if(figuraSeleccionada != null){
+            int frame = c.fotogramas_actual;
+            float [] par = {0,0};  
+            par[0] = Floats.tryParse(jTextField16.getText());
+            par[1] = Floats.tryParse(jTextField17.getText());
+            Keyframe.tiposTransf trans  = (Keyframe.tiposTransf) jComboBox2.getSelectedItem();
+            Keyframe k = new  Keyframe(c.getFotogramas_actual(),trans, figuraSeleccionada, par);
+                try {
+                    figuraSeleccionada.AgregarKeyframe(k);
+            
+                } catch (Exception e) {
+                   JOptionPane.showMessageDialog(this,e.getMessage());
+                }
+        }
+      
+      
+       
         
-        Keyframe.tiposTransf trans  = (Keyframe.tiposTransf) jComboBox2.getSelectedItem();
-        Keyframe k = new  Keyframe(c.getFotogramas_actual(),trans, figuraSeleccionada, par);
-        figuraSeleccionada.listakeyframes.addElement(k);
+        
     }//GEN-LAST:event_jButton25ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -1580,7 +1592,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     Keyframe.tiposTransf trans  = (Keyframe.tiposTransf) jComboBox2.getSelectedItem();
                     keyframeseleccionado.transformacion = trans;
                     keyframeseleccionado.param = par;
-                
+                    figuraSeleccionada.ordenarkeyFrames();
                     jList4.updateUI();
                 }else{
                     JOptionPane.showMessageDialog(this, "Error no se puede editar el keyframe");

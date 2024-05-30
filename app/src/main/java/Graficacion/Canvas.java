@@ -66,7 +66,6 @@ public class Canvas implements ApplicationListener{
         
         ActualizarInterface();
     }
-    
     public void ActualizarInterface(){
         int minutos = (int) (fotogramas_actual/3600);
         int segundos = (int )((fotogramas_actual % 3600)/60);
@@ -85,7 +84,16 @@ public class Canvas implements ApplicationListener{
     public void Fotogramaanmterior(){
            setFotogramas_actual(getFotogramas_actual()-1);
     }
-      
+      public void setFotograma(int valor){
+          fotogramas_actual = valor;
+          
+          ActualizarInterface();
+          
+          for(int i =0; i < listaFiguras.getSize();i++){
+              listaFiguras.get(i).ActualizarAnimacion(fotogramas_actual);
+          }
+      }
+    
     //Metodo para la colocacion de puntos 
     public void setEspaciado(int nuevoEspaciado) {
         int antiguoEspaciado = this.espaciado;
