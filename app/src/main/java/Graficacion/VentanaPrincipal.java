@@ -1582,8 +1582,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
        if(figuraSeleccionada != null){
-           if(jList4.getSelectedIndex()>0){
-                if(keyframeseleccionado != null){
+           if(keyframeseleccionado != null){
+                if(jList4.getSelectedIndex()>0){
                     int frame  = c.fotogramas_actual;
                     float []  par = {0,0};
                     par[0] = Floats.tryParse(jTextField16.getText());
@@ -1594,14 +1594,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     keyframeseleccionado.param = par;
                     figuraSeleccionada.ordenarkeyFrames();
                     jList4.updateUI();
-                }else{
+                    } else{
                     JOptionPane.showMessageDialog(this, "Error no se puede editar el keyframe");
                 }
-           }
-           
+            }
         }
     }//GEN-LAST:event_jButton26ActionPerformed
-
+                    
+            
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
       if(figuraSeleccionada  != null && keyframeseleccionado != null){
           try {
