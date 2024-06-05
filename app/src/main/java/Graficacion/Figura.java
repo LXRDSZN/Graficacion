@@ -54,7 +54,22 @@ public class Figura {
             listakeyframes.addElement((Keyframe)k);
         }
     }
-    
+        
+    public Keyframe getkeyframeAnterior(int numerodefotogramas){
+        Keyframe k = listakeyframes.get(0);
+        if(listakeyframes.size() > 1 && numerodefotogramas >0){
+            for(int i = 0; i <listakeyframes.size();i++ ){
+                k = listakeyframes.get(i);
+                    if(i <  listakeyframes.size()-1
+                            && numerodefotogramas >= listakeyframes.get(i).numerodefotogramas
+                            && numerodefotogramas < listakeyframes.get(i+1).numerodefotogramas){
+                        break;
+                    }
+            }
+            
+        }
+        return k;
+    } 
     public void actualizarPUntoskeyFrames(){
         if(listakeyframes.size()>1){
             for (int i = 1; i < listakeyframes.size(); i++) {
@@ -136,21 +151,7 @@ public class Figura {
         }
        
     }
-    
-    public Keyframe getkeyframeAnterior(int numerodefotogramas){
-        Keyframe k = listakeyframes.get(0);
-        if(listakeyframes.size() > 1 && numerodefotogramas >0){
-            for(int i = 0; i <listakeyframes.size();i++ ){
-                k = listakeyframes.get(i);
-                    if(i <  listakeyframes.size()
-                            && numerodefotogramas >= listakeyframes.get(i).numerodefotogramas
-                            && numerodefotogramas < listakeyframes.get(i+1).numerodefotogramas){
-                        break;
-                    }
-            }
-        }
-        return k;
-    } 
+
     public Keyframe  getkeyframeSiguiente(Keyframe anterior){
         int idx_anterior = listakeyframes.indexOf(anterior);
         if (idx_anterior < listakeyframes.size()-1){
@@ -190,15 +191,7 @@ public class Figura {
     }
     public void ActualizarAnimacion(int numerodefotogramas){
         Keyframe anterior = getkeyframeAnterior(numerodefotogramas);
-        Keyframe siguiente = getkeyframeSiguiente(anterior);
-        System.out.print("anterior "+ anterior.numerodefotogramas);
-        if(siguiente != null){
-              System.out.print("siguiente:  "+ siguiente.numerodefotogramas);
-              int diff_fotogramas = siguiente.numerodefotogramas - anterior.numerodefotogramas;
-              float fraccion = ((float)numerodefotogramas-(float)anterior.numerodefotogramas)/(float)diff_fotogramas;
-              System.out.print("diff:  "+ diff_fotogramas+ ". fraccion "+fraccion);
-
-        }
+        System.err.println("anterior : " + anterior.numerodefotogramas);
     }
     public void tranformar(Matriz3x3 mt){
         for (int i = 0; i < getKeyframeinicial().listaPuntos.size(); i++) {

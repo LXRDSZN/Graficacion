@@ -51,20 +51,18 @@ public class Canvas implements ApplicationListener{
       public static final int MAX_FOTOGRAMAS=3600;
       public int fotogramas_actual=0;
       public static boolean reproduciendo = false;
-    /**
-     * @return the fotogramas_actual
-     */
     public int getFotogramas_actual() {
         return fotogramas_actual;
     }
 
-    /**
-     * @param fotogramas_actual the fotogramas_actual to set
-     */
+  
     public void setFotogramas_actual(int fotogramas_actual) {
         this.fotogramas_actual = fotogramas_actual;
-        
-        ActualizarInterface();
+         ActualizarInterface();
+          for(int i =0; i < listaFiguras.getSize();i++){
+              listaFiguras.get(i).ActualizarAnimacion(fotogramas_actual);
+          }
+      
     }
     public void ActualizarInterface(){
         int minutos = (int) (fotogramas_actual/3600);
@@ -75,24 +73,17 @@ public class Canvas implements ApplicationListener{
       public Map<String, ModelInstance> getNameToModelMap() {
         return nameToModelMap;
     }
+      
+
       //Metodos para los fotogramas avanzar y anterior
       
     public void Fotogramasiguiente(){
-         setFotogramas_actual(getFotogramas_actual()+1);
+        setFotogramas_actual(fotogramas_actual+1);
     }
     
     public void Fotogramaanmterior(){
-           setFotogramas_actual(getFotogramas_actual()-1);
+           setFotogramas_actual(fotogramas_actual-1);
     }
-      public void setFotograma(int valor){
-          fotogramas_actual = valor;
-          
-          ActualizarInterface();
-          
-          for(int i =0; i < listaFiguras.getSize();i++){
-              listaFiguras.get(i).ActualizarAnimacion(fotogramas_actual);
-          }
-      }
     
     //Metodo para la colocacion de puntos 
     public void setEspaciado(int nuevoEspaciado) {

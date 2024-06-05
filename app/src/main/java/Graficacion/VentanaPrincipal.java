@@ -159,7 +159,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         jTextField17.setText("");
 
                     }
-                    jList2.updateUI();
                 }
             }
         });
